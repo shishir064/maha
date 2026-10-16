@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="min-h-screen bg-slate-50 p-4 sm:p-6">
 

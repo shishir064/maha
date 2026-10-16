@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class TypesController extends Controller
 {
     //
+      public function index(){
+        $types=Types::paginate(5);
+        return view('admin.types.index',compact('types'));
+    }
     public function create(){
         return view('admin.types.create');
     }

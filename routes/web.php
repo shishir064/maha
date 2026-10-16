@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\TypesController;
 use App\Livewire\ContactForm;
 use App\Livewire\Setting\Index;
@@ -65,6 +67,20 @@ route::get('admin/types/{type}/edit', [TypesController::class, 'edit'])->name('a
 route::PUT('admin/types/{type}', [TypesController::class, 'update'])->name('admin.types.update');
 route::delete('admin/types/{type}', [TypesController::class, 'delete'])->name('admin.types.destroy');
 
+// advertisement route
+
+Route::get(
+    '/admin/advertisement/items/{type}',
+    [AdvertisementController::class, 'items']
+)->name('admin.advertisement.items');
+route::get('admin/advertisement/create', [AdvertisementController::class, 'create'])->name('admin.advertisement.create');
+route::get('admin/advertisement/{advertisement}/edit', [AdvertisementController::class, 'edit'])->name('admin.advertisement.edit');
+route::post('admin/advertisement', [AdvertisementController::class, 'store'])->name('admin.advertisement.store');
+route::get('admin/advertisement', [AdvertisementController::class, 'index'])->name('admin.advertisement.index');
+route::put('admin/advertisement/{advertisement}', [AdvertisementController::class, 'update'])->name('admin.advertisement.update');
+route::delete('admin/advertisement/{advertisement}', [AdvertisementController::class, 'delete'])->name('admin.advertisement.destroy');
+// slider route
+route::resource('admin/sliders', SliderController::class)->names('admin.sliders');
 
 //Setting route
 Route::prefix('settings')->name('settings.')->group(function () {

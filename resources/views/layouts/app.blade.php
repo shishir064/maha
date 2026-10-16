@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
     <title>{{ $title ?? 'Admin Dashboard' }} | Mahasasto Shop</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -47,7 +49,7 @@
 
     {{-- Logo --}}
     <div class="flex h-20 items-center justify-between border-b border-slate-200 px-6">
-        <a href="{{ url('/admin') }}" class="flex items-center gap-3">
+        <a href="{{ url('/dashboard') }}" class="flex items-center gap-3">
             <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-200">
                 <svg xmlns="http://www.w3.org/2000/svg"
                      fill="none" viewBox="0 0 24 24"
@@ -90,7 +92,7 @@
         </p>
 
         {{-- Dashboard --}}
-        <a href="{{ url('/admin') }}"
+        <a href="{{ url('/dashboard') }}"
            class="flex items-center gap-3 rounded-xl bg-indigo-600 px-4 py-3 font-medium text-white shadow-lg shadow-indigo-200/60 transition">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24"
@@ -183,11 +185,11 @@
 
             <div x-cloak x-show="open" x-transition
                  class="ml-7 mt-1 space-y-1 border-l border-slate-200 pl-4">
-                <a href="{{ route('admin.products.create') }}"
+                <a href="{{ route('admin.products.index') }}"
                  wire:navigate  class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition  hover:bg-white hover:text-indigo-600">
                     All Products
                 </a>
-                <a href=""
+                <a href="{{ route('admin.products.create') }}"
                    class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-500 transition  hover:bg-white hover:text-indigo-600">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          fill="none" viewBox="0 0 24 24"
@@ -215,7 +217,7 @@
         </a>
 
         {{-- Brands --}}
-        <a href="{{ route('admin.brand.create') }}"
+        <a href="{{ route('admin.brand.index') }}"
            class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24"
@@ -259,7 +261,7 @@
         </a>
 
         {{-- Banners --}}
-        <a href="{{ url('/admin/banners') }}"
+        <a href="{{ route('admin.advertisement.index') }}"
            class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24"
@@ -268,8 +270,38 @@
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M3 5.25h18v13.5H3V5.25Zm0 9 5-5 4 4 3-3 6 6"/>
             </svg>
-            Banners
+          advertisement Banners
         </a>
+
+
+        
+        {{-- audiance types --}}
+        <a href="{{route('admin.types.index') }}"
+           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.8" stroke="currentColor"
+                 class="h-5 w-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3 5.25h18v13.5H3V5.25Zm0 9 5-5 4 4 3-3 6 6"/>
+            </svg>
+            Audience Types
+        </a>
+
+        
+        {{-- sliders --}}
+        <a href="{{route('admin.sliders.index') }}"
+           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.8" stroke="currentColor"
+                 class="h-5 w-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3 5.25h18v13.5H3V5.25Zm0 9 5-5 4 4 3-3 6 6"/>
+            </svg>
+         slider
+        </a>
+
 
         {{-- Blogs --}}
         <a href="{{ url('/admin/blogs') }}"
