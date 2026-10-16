@@ -202,7 +202,7 @@
         </div>
 
         {{-- Categories --}}
-        <a href="{{ url('/admin/categories') }}"
+        <a href="{{ route('admin.category.index') }}"
            class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24"
@@ -215,7 +215,7 @@
         </a>
 
         {{-- Brands --}}
-        <a href="{{ url('/admin/brands') }}"
+        <a href="{{ route('admin.brand.create') }}"
            class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24"
