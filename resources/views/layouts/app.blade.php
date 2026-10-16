@@ -9,7 +9,7 @@
     <title>{{ $title ?? 'Admin Dashboard' }} | Mahasasto Shop</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    @livewireStyles
     <style>
         [x-cloak] {
             display: none !important;
@@ -183,12 +183,12 @@
 
             <div x-cloak x-show="open" x-transition
                  class="ml-7 mt-1 space-y-1 border-l border-slate-200 pl-4">
-                <a href="{{ url('/admin/products') }}"
-                   class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
+                <a href="{{ route('admin.products.create') }}"
+                 wire:navigate  class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition  hover:bg-white hover:text-indigo-600">
                     All Products
                 </a>
-                <a href="{{ url('/admin/products/create') }}"
-                   class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
+                <a href=""
+                   class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-500 transition  hover:bg-white hover:text-indigo-600">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          fill="none" viewBox="0 0 24 24"
                          stroke-width="1.8" stroke="currentColor"
@@ -298,8 +298,9 @@
         </a>
 
         {{-- Settings --}}
-        <a href="{{ url('/admin/settings') }}"
-           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
+        <a href="{{ route('settings.index') }}"
+        wire:navigate
+           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600" >
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24"
                  stroke-width="1.8" stroke="currentColor"
@@ -498,12 +499,12 @@
                 </div>
             @endif
 
-            {{ $slot }}
+            @yield('content')
 
         </main>
 
     </div>
 </div>
-
+@livewireScripts
 </body>
 </html>

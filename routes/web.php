@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TypesController;
 use App\Livewire\ContactForm;
+use App\Livewire\Setting\Index;
 use App\Models\Types;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +64,12 @@ route::get('admin/types/create', [TypesController::class, 'create'])->name('admi
 route::get('admin/types/{type}/edit', [TypesController::class, 'edit'])->name('admin.types.edit');
 route::PUT('admin/types/{type}', [TypesController::class, 'update'])->name('admin.types.update');
 route::delete('admin/types/{type}', [TypesController::class, 'delete'])->name('admin.types.destroy');
+
+
+//Setting route
+Route::prefix('settings')->name('settings.')->group(function () {
+    Route::view('/', 'pages.setting')->name('index');
+});
 
 
 require __DIR__.'/auth.php';
