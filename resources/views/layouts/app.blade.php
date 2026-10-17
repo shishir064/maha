@@ -298,7 +298,7 @@
         </a>
 
         {{-- Settings --}}
-        <a href="{{ route('settings.index') }}"
+        <a href="{{ route('setting.index') }}"
         wire:navigate
            class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600" >
             <svg xmlns="http://www.w3.org/2000/svg"

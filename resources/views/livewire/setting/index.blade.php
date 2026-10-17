@@ -1,64 +1,7 @@
 <div class="mx-auto max-w-4xl space-y-6">
 
-    {{-- Page Header --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-            <div class="mb-2 flex items-center gap-2 text-sm text-slate-500">
-                <a href="{{ url('/super-admin/dashboard') }}" class="transition hover:text-indigo-600">
-                    Super Admin
-                </a>
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" />
-                </svg>
-                <span class="font-medium text-slate-700">Settings</span>
-            </div>
-
-            <h1 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-                Platform Settings
-            </h1>
-
-            <p class="mt-2 text-sm text-slate-500">
-                Manage your primary store details and contact information.
-            </p>
-        </div>
-
-        <div class="flex items-center gap-3 self-start rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 sm:self-auto">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-indigo-600">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm10-14V5a4 4 0 0 0-8 0v2" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-sm font-semibold text-indigo-900">Super Admin</p>
-                <p class="text-xs text-indigo-600">Global configuration</p>
-            </div>
-        </div>
-    </div>
-
-    {{-- Success Message --}}
-    @if (session('success'))
-        <div class="flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
-            <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m5 12 4 4L19 6" />
-            </svg>
-            {{ session('success') }}
-        </div>
-    @endif
-
-    {{-- Validation Errors --}}
-    @if ($errors->any())
-        <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-            <p class="mb-2 font-semibold">Please check the following:</p>
-            <ul class="list-inside list-disc space-y-1">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    {{-- Main Settings Form --}}
-    <form action="#" method="POST" class="space-y-6">
+    {{-- Main s Form --}}
+    <form action="{{ route('setting.store') }}" method="POST" class="space-y-6">
         @csrf
 
         {{-- Basic Information Section --}}
@@ -79,6 +22,30 @@
 
             <div class="grid grid-cols-1 gap-6 p-5 sm:grid-cols-2 sm:p-7">
                 
+                
+                {{-- Platform Logo --}}
+                <div>
+                    <label for="site_logo" class="mb-2 block text-sm font-medium text-slate-700">
+                        Platform Logo <span class="text-red-500">*</span>
+                    </label>
+
+                    <input
+                        id="site_logo"
+                        name="site_logo"
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-indigo-700 hover:file:bg-indigo-100 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    >
+
+                    @error('site_logo')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+
+                    <p class="mt-1 text-xs text-slate-500">
+                        Upload your platform logo (PNG, JPG, WEBP, or SVG).
+                    </p>
+                </div>
+
                 {{-- Platform Name --}}
                 <div>
                     <label for="site_name" class="mb-2 block text-sm font-medium text-slate-700">
@@ -91,14 +58,34 @@
                     @enderror
                 </div>
 
-                {{-- Website URL (Link) --}}
+                {{-- Social URL (Link) --}}
                 <div>
                     <label for="site_url" class="mb-2 block text-sm font-medium text-slate-700">
-                        Website Link <span class="text-red-500">*</span>
+                        Facebook Link <span class="text-red-500">*</span>
                     </label>
-                    <input id="site_url" name="site_url" type="url" value="{{ old('site_url', url('/')) }}" placeholder="https://example.com"
+                    <input id="facebook_url" name="facebook_url" type="url" value="{{ old('site_url') }}" placeholder="https://example.com"
                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50">
-                    @error('site_url')
+                    @error('facebook_url')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="whatsapp_url" class="mb-2 block text-sm font-medium text-slate-700">
+                        Whatsapp Link <span class="text-red-500">*</span>
+                    </label>
+                    <input id="whatsapp_url" name="whatsapp_url" type="url" value="{{ old('site_url') }}" placeholder="https://example.com"
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50">
+                    @error('whatsapp_url')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="site_url" class="mb-2 block text-sm font-medium text-slate-700">
+                        Instagram Link <span class="text-red-500">*</span>
+                    </label>
+                    <input id="instagram_url" name="instagram_url" type="url" value="{{ old('instagram_url') }}" placeholder="https://example.com"
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50">
+                    @error('instagram_url')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
@@ -136,6 +123,9 @@
             </div>
         </section>
 
+        
+
+
         {{-- Form Actions --}}
         <div class="sticky bottom-0 z-10 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between sm:px-6">
             <p class="text-xs text-slate-500">
@@ -150,7 +140,7 @@
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m5 12 4 4L19 6" />
                     </svg>
-                    Save Settings
+                    Save
                 </button>
             </div>
         </div>

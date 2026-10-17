@@ -4,6 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TypesController;
 use App\Livewire\ContactForm;
 use App\Livewire\Setting\Index;
@@ -67,9 +68,9 @@ route::delete('admin/types/{type}', [TypesController::class, 'delete'])->name('a
 
 
 //Setting route
-Route::prefix('settings')->name('settings.')->group(function () {
-    Route::view('/', 'pages.setting')->name('index');
-});
+
+Route::get('settings', [SettingController::class, 'index'])->name('setting.index');
+Route::post('settings/create', [SettingController::class, 'store'])->name('setting.store');
 
 
 require __DIR__.'/auth.php';
