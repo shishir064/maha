@@ -22,4 +22,15 @@ class TypesController extends Controller
         Types::create($validate);
         return view('admin.types.create');
     }
+
+    public function delete($id){
+$types=Types::find($id);
+    if ($types->products()->exists()) {
+        return redirect()
+            ->route('admin.types.index')
+            ->with('error', 'Cannot delete this brand because products are using it.');
+    }
+$types->delete();
+return redirect()->route('admin.types.index');
+    }
 }

@@ -29,7 +29,6 @@ class CategoryRequest extends FormRequest
         'string',
         'min:2',
         'max:100',
-        'unique:categories,name',
     ],
 
     // 'slug' => [

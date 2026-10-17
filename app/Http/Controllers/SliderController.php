@@ -58,24 +58,53 @@ class SliderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Slider $slider)
+    public function edit($id)
     {
-        //
+        $slider = Slider::find($id);
+    return view('admin.sliders.edit', compact('slider'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Slider $slider)
+    public function update(SliderRequest $request, $id)
     {
-        //
+        $slider = Slider::find($id);
+        $validated = $request->validated();
+
+$path = null;
+if($request->hasFile('desktop_image')) {
+    $path = $request->file('desktop_image')->store(
+        'slider-images',
+        'public'
+    );
+    $validate['desktop_image']=$path;
+}
+
+if($request->hasFile('mobile_image')) {
+    $path = $request->file('mobile_image')->store(
+        'slider-images',
+        'public'
+    );
+    $validate['mobile_image']=$path??$slider->mobile_image;
+}
+
+        $slider->update($validated);
+
+        return redirect()
+            ->route('admin.sliders.index')
+            ->with('success', 'Slider updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Slider $slider)
+    public function destroy($id)
     {
-        //
+        $slider=Slider::find($id);
+        $slider->delete();
+        return redirect()
+            ->route('admin.sliders.index')
+            ->with('success', 'Slider deleted successfully.');
     }
 }

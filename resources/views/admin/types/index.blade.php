@@ -131,11 +131,7 @@
                                 <td class="px-4 py-3.5">
                                     <div class="flex items-center justify-center gap-2">
 
-                                        <a href="{{ route('admin.types.edit', $type->id) }}"
-                                           title="Edit"
-                                           class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-green-50 text-green-600 transition hover:bg-green-100">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </a>
+                                      
 
                                         <form action="{{ route('admin.types.destroy', $type->id) }}"
                                               method="POST"

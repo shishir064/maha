@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BrandRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -17,7 +18,7 @@ class BrandController extends Controller
         $path=null;
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $path=$file->store('category-image','public');
+            $path=$file->store('brand-image','public');
             $validate['image']=$path;
         }
         Brand::create($validate);
@@ -45,4 +46,57 @@ class BrandController extends Controller
     return view('admin.brand.index', compact('brands'));
 }
 
+public function edit( $id){
+    $brand=Brand::find($id);
+    return view('admin.brand.edit',compact('brand'));
+
+}
+
+public function update(BrandRequest $request,$id){
+   $brand = Brand::findOrFail($id);
+$validate = $request->validated();
+
+$path = null;
+
+if ($request->hasFile('image')) {
+    $path = $request->file('image')->store(
+        'brand-images',
+        'public'
+    );
+
+    if ($brand->image) {
+        Storage::disk('public')->delete($brand->image);
+    }
+}
+
+$validate['image'] = $path ?? $brand->image;
+
+$brand->update($validate);
+
+return redirect()
+    ->route('admin.brand.index')
+    ->with('success', 'Brand updated successfully.');
+
+}
+
+public function delete($id)
+{
+    $brand = Brand::findOrFail($id);
+
+    if ($brand->products()->exists()) {
+        return redirect()
+            ->route('admin.brand.index')
+            ->with('error', 'Cannot delete this brand because products are using it.');
+    }
+
+    if ($brand->image) {
+        Storage::disk('public')->delete($brand->image);
+    }
+
+    $brand->delete();
+
+    return redirect()
+        ->route('admin.brand.index')
+        ->with('success', 'Brand deleted successfully.');
+}
 }

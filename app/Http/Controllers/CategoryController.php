@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -43,6 +44,54 @@ public function index(Request $request)
         ->paginate(10);
 
     return view('admin.category.index', compact('categories'));
+}
+public function edit( $id){
+    $category=Category::find($id);
+    return view('admin.category.edit',compact('category'));
+
+}
+
+public function update(CategoryRequest $request,$id){
+    $category = Category::findOrFail($id);
+    $validate = $request->validated();
+    $path = null;
+   
+if ($request->hasFile('image')) {
+    $path = $request->file('image')->store(
+        'category-images',
+        'public'
+    );
+
+    if ($category->image) {
+        Storage::disk('public')->delete($category->image);
+    }
+}
+
+$validate['image'] = $path ?? $category->image;
+
+    $category->update($validate);
+    return redirect()->route('admin.category.index')->with('success', 'Category updated successfully.');
+}
+
+public function delete($id)
+{
+    $category = Category::findOrFail($id);
+
+    if ($category->products()->exists()) {
+        return redirect()
+            ->route('admin.category.index')
+            ->with('error', 'Cannot delete this category because products are using it.');
+    }
+
+    if ($category->image) {
+        Storage::disk('public')->delete($category->image);
+    }
+
+    $category->delete();
+
+    return redirect()
+        ->route('admin.category.index')
+        ->with('success', 'category deleted successfully.');
 }
 
 }

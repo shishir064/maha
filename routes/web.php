@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
 route::get('admin/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
 route::post('admin/category', [CategoryController::class, 'store'])->name('admin.category.store');
 route::get('admin/category', [CategoryController::class, 'index'])->name('admin.category.index');
-route::PUT('admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
+route::put('admin/category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
 route::delete('admin/category/{category}', [CategoryController::class, 'delete'])->name('admin.category.destroy');
 route::get('admin/category/{category}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
 
@@ -47,16 +47,16 @@ route::get('admin/category/{category}/edit', [CategoryController::class, 'edit']
 route::get('admin/brand/create', [BrandController::class, 'create'])->name('admin.brand.create');
 route::post('admin/brand', [BrandController::class, 'store'])->name('admin.brand.store');
 route::get('admin/brand', [BrandController::class, 'index'])->name('admin.brand.index');
-route::PUT('admin/brand/{brand}', [BrandController::class, 'update'])->name('admin.brand.update');
+route::put('admin/brand/{brand}', [BrandController::class, 'update'])->name('admin.brand.update');
 route::delete('admin/brand/{brand}', [BrandController::class, 'delete'])->name('admin.brand.destroy');
-route::get('admin/brand/{brand}/edit', [BrandController::class, 'edit'])->name('admin.brand.edit');
+route::get('admin/brand/{id}/edit', [BrandController::class, 'edit'])->name('admin.brand.edit');
 
 // products route
 route::get('admin/products', [ProductController::class, 'index'])->name('admin.products.index');
 route::post('admin/products', [ProductController::class, 'store'])->name('admin.products.store');
 route::get('admin/products/create', [ProductController::class, 'create'])->name('admin.products.create');
 route::get('admin/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
-route::PUT('admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
+route::put('admin/products/{product}', [ProductController::class, 'update'])->name('admin.products.update');
 route::delete('admin/products/{product}', [ProductController::class, 'delete'])->name('admin.products.destroy');
 
 // audiance type route

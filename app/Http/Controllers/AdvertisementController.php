@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\AvertisementRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdvertisementController extends Controller
 {
@@ -89,24 +90,46 @@ public function items(string $type)
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Advertisement $advertisement)
+    public function edit($id)
     {
         //
+        $advertisement = Advertisement::find($id);
+        return view('admin.advertisement.edit', compact('advertisement'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Advertisement $advertisement)
+    public function update(AvertisementRequest $request, $id)
     {
-        //
+    $advertisement=Advertisement::find($id);
+
+    $validated = $request->validated();
+    $path=null;
+    if($request->hasFile('image'))
+    {
+        $path=$request->file('image')->store('advertisements-images', 'public');
+        if($advertisement->image)
+        {
+            Storage::disk('public')->delete($advertisement->image);
+        };
+    }
+    $validated['image']=$path??$advertisement->image;
+    $advertisement->update($validated);
+    return redirect()
+        ->route('admin.advertisement.index')
+        ->with('success', 'Advertisement updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Advertisement $advertisement)
+    public function destroy($id)
     {
-        //
+        $advertisement=Advertisement::find($id);
+        $advertisement->delete();
+        return redirect()
+            ->route('admin.advertisement.index')
+            ->with('success', 'Advertisement deleted successfully.');
     }
 }
