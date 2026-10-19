@@ -1,7 +1,7 @@
 <div class="mx-auto max-w-4xl space-y-6">
 
     {{-- Main s Form --}}
-    <form action="{{ route('setting.store') }}" method="POST" class="space-y-6">
+    <form action="{{ route('settings.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
         @csrf
 
         {{-- Basic Information Section --}}
@@ -51,7 +51,7 @@
                     <label for="site_name" class="mb-2 block text-sm font-medium text-slate-700">
                         Platform Name <span class="text-red-500">*</span>
                     </label>
-                    <input id="site_name" name="site_name" type="text" value="{{ old('site_name', 'Mahasasto Shop') }}" placeholder="Enter platform name"
+                    <input id="site_name" name="site_name" type="text" value="{{ old('site_name') }}" placeholder="Enter platform name"
                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50">
                     @error('site_name')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -86,6 +86,16 @@
                     <input id="instagram_url" name="instagram_url" type="url" value="{{ old('instagram_url') }}" placeholder="https://example.com"
                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50">
                     @error('instagram_url')
+                        <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="site_url" class="mb-2 block text-sm font-medium text-slate-700">
+                        Tiktok Link <span class="text-red-500">*</span>
+                    </label>
+                    <input id="tiktok_url" name="tiktok_url" type="url" value="{{ old('tiktok_url') }}" placeholder="https://example.com"
+                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50">
+                    @error('tiktok_url')
                         <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                     @enderror
                 </div>

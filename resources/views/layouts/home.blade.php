@@ -12,7 +12,7 @@
 </head>
 
 <body class="bg-slate-100 text-slate-800 antialiased w-full ">
-    {{-- <x-store.header /> --}}
+    
     <x-home.top-bar />
 
 
@@ -181,7 +181,8 @@
     </main>
     @include('components.home.footer')
 
-
+   <x-success-message />
+<x-error-message />
     @livewireScripts
 </body>
 

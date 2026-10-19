@@ -1,5 +1,6 @@
+@extends('layouts.app')
 
-<x-app-layout>
+@section('content')
     <div class="min-h-screen bg-slate-100 p-4 sm:p-6">
 
         {{-- Header --}}
@@ -183,16 +184,16 @@
                                         </a>
 
                                         {{-- Edit --}}
-                                        <a href="{{ route('admin.category.edit', $brand) }}"
+                                        <a href="{{ route('admin.brand.edit', $brand->id) }}"
                                            title="Edit category"
                                            class="flex h-9 w-9 items-center justify-center rounded-lg border border-green-200 bg-green-100 text-green-800 transition hover:border-green-600 hover:bg-green-600 hover:text-white">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
 
                                         {{-- Delete --}}
-                                        <form action="{{ route('admin.category.destroy', $brand) }}"
+                                        <form action="{{ route('admin.brand.destroy', $brand) }}"
                                               method="POST"
-                                              onsubmit="return confirm('Are you sure you want to delete this category?')">
+                                              onsubmit="return confirm('Are you sure you want to delete this brand?')">
                                             @csrf
                                             @method('DELETE')
 
@@ -243,4 +244,4 @@
 
         </div>
     </div>
-</x-app-layout>
+@endsection

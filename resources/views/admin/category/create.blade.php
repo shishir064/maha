@@ -1,4 +1,5 @@
-<x-app-layout>
+@extends('layouts.app')
+@section('content')
 <div class="min-h-screen bg-slate-50 p-4 sm:p-6">
 
     {{-- Header --}}
@@ -202,5 +203,4 @@
         </div>
     </form>
 </div>
-
-</x-app-layout>
+@endsection

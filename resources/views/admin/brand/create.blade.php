@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
 <div class="min-h-screen bg-slate-50 p-4 sm:p-6">
 
     {{-- Header --}}
@@ -72,21 +74,7 @@
                         @enderror
                     </div>
 
-                    {{-- <div>
-                        <label for="slug" class="mb-2 block text-sm font-medium text-slate-700">
-                            Slug <span class="text-red-500">*</span>
-                        </label>
-                        <input type="text"
-                               name="slug"
-                               id="slug"
-                               value="{{ old('slug') }}"
-                               placeholder="e.g. guchi"
-                               required
-                               class="w-full rounded-lg border border-slate-200 px-3.5 py-2.5 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100">
-                        @error('slug')
-                            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                        @enderror
-                    </div> --}}
+                  
                 </div>
                 {{-- Description --}}
                 <div>
@@ -203,4 +191,4 @@
     </form>
 </div>
 
-</x-app-layout>
+@endsection
