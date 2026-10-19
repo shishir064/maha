@@ -1,13 +1,15 @@
 <?php
-
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\TypesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -79,6 +81,7 @@ route::put('admin/advertisement/{advertisement}', [AdvertisementController::clas
 route::delete('admin/advertisement/{advertisement}', [AdvertisementController::class, 'delete'])->name('admin.advertisement.destroy');
 // slider route
 route::resource('admin/sliders', SliderController::class)->names('admin.sliders');
+route::resource('admin/users',UserController::class)->names('admin.users');
 
 //Setting route
 Route::get('setting', [SettingController::class, 'index'])->name('settings.index');
@@ -88,5 +91,18 @@ Route::post('setting/create', [SettingController::class, 'store'])->name('settin
 Route::prefix('super-admin')->name('super-admin.')->group(function () {
         Route::view('/blogs/create', 'pages.blog')->name('blogs.create');
     });
+ //roles route
+   Route::get('admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
+   route::get('admin/roles', [RoleController::class, 'index'])->name('admin.roles.index');
+   route::get('admin/roles/{id}', [RoleController::class, 'show'])->name('admin.roles.show');
+   route::post('admin/roles/{id}', [RoleController::class, 'assign'])->name('admin.roles.assign');
+   Route::post('admin/roles', [RoleController::class, 'store'])->name('admin.roles.store');
+   route::put('admin/roles/{role}', [RoleController::class, 'update'])->name('admin.roles.update');
+   route::get('admin/roles/{role}/edit', [RoleController::class, 'edit'])->name('admin.roles.edit');
+   route::delete('admin/roles/{role}', [RoleController::class, 'delete'])->name('admin.roles.destroy');
+   
+//permission route
+route::resource('admin/permissions', PermissionController::class)->names('admin.permissions');
+route::post('admin/permissions/{role}', [PermissionController::class, 'assign'])->name('admin.permissions.assign');
 
 require __DIR__.'/auth.php';

@@ -229,8 +229,18 @@
         </a>
 
         {{-- Customers --}}
-        <a href="{{ url('/admin/customers') }}"
-           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
+       
+{{-- User Management Dropdown --}}
+<div x-data="{ open: false }" class="space-y-1">
+
+    {{-- Dropdown Button --}}
+    <button
+        @click="open = !open"
+        class="flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600"
+        :class="{ 'bg-white text-indigo-600': open }">
+
+        <span class="flex items-center gap-3">
+            {{-- Users Icon --}}
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none" viewBox="0 0 24 24"
                  stroke-width="1.8" stroke="currentColor"
@@ -238,8 +248,89 @@
                 <path stroke-linecap="round" stroke-linejoin="round"
                       d="M16 18.5a4.5 4.5 0 0 0-9 0m13 0a4 4 0 0 0-3.2-3.92M4 18.5a4 4 0 0 1 3.2-3.92M15.5 7.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm4 2a3 3 0 1 1-2-2.83"/>
             </svg>
-            Customers
+
+           User Management
+        </span>
+
+        {{-- Chevron Icon --}}
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none" viewBox="0 0 24 24"
+             stroke-width="2" stroke="currentColor"
+             class="h-4 w-4 transition-transform duration-200"
+             :class="{ 'rotate-180': open }">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m19 9-7 7-7-7"/>
+        </svg>
+    </button>
+
+    {{-- Dropdown Items --}}
+    <div x-show="open"
+         x-transition
+         x-cloak
+         class="ml-5 space-y-1 border-l-2 border-slate-200 pl-3">
+
+        {{-- Roles --}}
+        <a href="{{ route('admin.roles.index') }}"
+           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.8" stroke="currentColor"
+                 class="h-5 w-5 shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M12 3l2.1 1.5 2.55-.15.9 2.4 2.1 1.5-.9 2.4.9 2.4-2.1 1.5-.9 2.4-2.55-.15L12 21l-2.1-1.5-2.55.15-.9-2.4-2.1-1.5.9-2.4-.9-2.4 2.1-1.5.9-2.4 2.55.15L12 3Z"/>
+            </svg>
+
+            Roles
         </a>
+
+        {{-- Permissions --}}
+        <a href="{{route('admin.permissions.index')}}"
+           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.8" stroke="currentColor"
+                 class="h-5 w-5 shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15.75 5.25a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.25a7.5 7.5 0 0 1 15 0M16.5 11.25l2 2 3.75-4"/>
+            </svg>
+
+            Permissions
+        </a>
+
+        {{-- Users --}}
+        <a href="{{ route('admin.users.index') }}"
+           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.8" stroke="currentColor"
+                 class="h-5 w-5 shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15 19.5a6 6 0 0 0-12 0m9-13.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.5 13.5a5.25 5.25 0 0 0-4.5-5.19M16.5 3.75a3 3 0 0 1 0 5.82"/>
+            </svg>
+
+            Users
+        </a>
+
+        {{-- Audience Types --}}
+        <a href="{{ route('admin.types.index') }}"
+           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.8" stroke="currentColor"
+                 class="h-5 w-5 shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M17 20.25v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5a4.5 4.5 0 0 0-4.5 4.5v1.5M10 10.5a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Zm6-6.75a3.75 3.75 0 0 1 0 7.25m2 3.5a4.5 4.5 0 0 1 3 4.25v1.5"/>
+            </svg>
+
+            Audience Types
+        </a>
+
+    </div>
+</div>
 
         {{-- Store Management --}}
         <p class="mb-3 mt-7 px-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
@@ -270,21 +361,6 @@
                       d="M3 5.25h18v13.5H3V5.25Zm0 9 5-5 4 4 3-3 6 6"/>
             </svg>
           advertisement Banners
-        </a>
-
-
-        
-        {{-- audiance types --}}
-        <a href="{{route('admin.types.index') }}"
-           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.8" stroke="currentColor"
-                 class="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3 5.25h18v13.5H3V5.25Zm0 9 5-5 4 4 3-3 6 6"/>
-            </svg>
-            Audience Types
         </a>
 
         
