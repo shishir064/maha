@@ -33,36 +33,6 @@
             </a>
         </div>
 
-        {{-- Success Message --}}
-        @if (session('success'))
-            <div class="mb-5 flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800"
-                 role="status">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     fill="none" viewBox="0 0 24 24"
-                     stroke-width="2" stroke="currentColor"
-                     class="h-5 w-5 shrink-0 text-emerald-600">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="m4.5 12.75 4.5 4.5 10.5-10.5"/>
-                    <circle cx="12" cy="12" r="9"/>
-                </svg>
-
-                {{ session('success') }}
-            </div>
-        @endif
-
-        {{-- Validation Errors --}}
-        @if ($errors->any())
-            <div class="mb-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-                <p class="mb-2 font-semibold">Please check the following errors:</p>
-
-                <ul class="list-inside list-disc space-y-1">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         {{-- Search and Filter --}}
         <div class="mb-5 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
             <form action="{{ route('admin.category.index') }}"

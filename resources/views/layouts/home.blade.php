@@ -120,51 +120,142 @@
             </form>
 
             <!-- Navigation Links -->
-            <nav class="space-y-1">
-                <a href="/" wire:navigate @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>Home</span>
-                </a>
+            
+{{-- Mobile Navigation Links --}}
+<nav class="space-y-1">
 
-                <a href="/categories" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>Categories</span>
-                </a>
+    {{-- Home --}}
+    <a href="/"
+       wire:navigate
+       @click="mobileMenuOpen = false"
+       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
+             stroke-width="1.7" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m2.25 12 9.204-8.436a.75.75 0 0 1 1.092 0L21.75 12M4.5 9.938V19.5a.75.75 0 0 0 .75.75h4.5v-6h4.5v6h4.5a.75.75 0 0 0 .75-.75V9.938" />
+        </svg>
+        <span>Home</span>
+    </a>
 
-                <a href="/products" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>All Products</span>
-                </a>
+    {{-- All Products --}}
+    <a href="/products"
+       wire:navigate
+       @click="mobileMenuOpen = false"
+       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
+             stroke-width="1.7" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3.75 6.75h16.5v12.5H3.75zM3.75 10.5h16.5M8 6.75v12.5" />
+        </svg>
+        <span>All Products</span>
+    </a>
 
-                <a href="/offers" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>Special Offers</span>
-                </a>
+    {{-- Categories Dropdown --}}
+    <div x-data="{ categoriesOpen: false }" class="rounded-lg">
 
-                <a href="/brands" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>Our Brands</span>
-                </a>
+        <button type="button"
+                @click="categoriesOpen = !categoriesOpen"
+                :aria-expanded="categoriesOpen"
+                class="flex w-full items-center justify-between rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
 
-                <div class="my-3 border-t border-slate-200"></div>
+            <span class="flex items-center gap-3">
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
+                     stroke-width="1.7" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                Categories
+            </span>
 
-                <a href="{{ Route::has('login') ? route('login') : '#' }}" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>My Account / Login</span>
-                </a>
+            <svg class="h-4 w-4 shrink-0 transition-transform duration-200"
+                 :class="{ 'rotate-180': categoriesOpen }"
+                 fill="none" stroke="currentColor" stroke-width="1.8"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </button>
 
-                <a href="#wishlist" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>My Wishlist</span>
-                    <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
-                </a>
+        {{-- Expandable Category List --}}
+        <div x-cloak
+             x-show="categoriesOpen"
+             x-transition
+             class="ml-5 mt-1 overflow-hidden rounded-lg border-l-2 border-sky-100 pl-3">
 
-                <a href="#cart" @click="mobileMenuOpen = false"
-                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600">
-                    <span>My Cart</span>
-                    <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
-                </a>
-            </nav>
+            <div class="max-h-56 space-y-1 overflow-y-auto py-1">
+
+                @forelse (\App\Models\Category::orderBy('name')->get() as $category)
+                    <a href="{{ url('/categories/' . $category->slug) }}"
+                       wire:navigate
+                       @click="mobileMenuOpen = false"
+                       class="block break-words rounded-md px-3 py-2.5 text-sm font-normal text-slate-600 transition hover:bg-sky-50 hover:text-sky-600">
+                        {{ $category->name }}
+                    </a>
+                @empty
+                    <p class="px-3 py-3 text-sm text-slate-500">
+                        No categories available.
+                    </p>
+                @endforelse
+
+            </div>
+        </div>
+    </div>
+
+    {{-- Special Offers --}}
+    <a href="/offers"
+       wire:navigate
+       @click="mobileMenuOpen = false"
+       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
+             stroke-width="1.7" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m12 3 2.5 5.5 6 .7-4.5 4.1 1.2 6-5.2-3-5.2 3 1.2-6-4.5-4.1 6-.7L12 3Z" />
+        </svg>
+        <span>Special Offers</span>
+    </a>
+
+    {{-- Our Brands --}}
+    <a href="/brands"
+       wire:navigate
+       @click="mobileMenuOpen = false"
+       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
+             stroke-width="1.7" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 3 3.75 7.5 12 12l8.25-4.5L12 3ZM3.75 12 12 16.5 20.25 12M3.75 16.5 12 21l8.25-4.5" />
+        </svg>
+        <span>Our Brands</span>
+    </a>
+
+    {{-- Divider --}}
+    <div class="my-3 border-t border-slate-200"></div>
+
+    {{-- Account --}}
+    <a href="{{ Route::has('login') ? route('login') : '#' }}"
+       @click="mobileMenuOpen = false"
+       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+        <span>My Account / Login</span>
+    </a>
+
+    {{-- Wishlist --}}
+    <a href="#wishlist"
+       @click="mobileMenuOpen = false"
+       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+        <span>My Wishlist</span>
+        <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
+    </a>
+
+    {{-- Cart --}}
+    <a href="{{ route('cart') }}"
+       wire:navigate
+       @click="mobileMenuOpen = false"
+       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+        <span>My Cart</span>
+        <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
+    </a>
+
+</nav>
+
         </div>
 
         <!-- Existing Desktop Navigation -->
@@ -182,7 +273,7 @@
     @include('components.home.footer')
 
    <x-success-message />
-<x-error-message />
+    <x-error-message />
     @livewireScripts
 </body>
 

@@ -48,18 +48,6 @@
         </div>
     @endif
 
-    {{-- Validation Errors --}}
-    @if ($errors->any())
-        <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-            <p class="mb-2 font-semibold">Please check the following:</p>
-            <ul class="list-inside list-disc space-y-1">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <livewire:setting.index />
 </div>
 @endsection

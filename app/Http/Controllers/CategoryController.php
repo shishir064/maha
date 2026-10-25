@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     //
     public function create(){
-        return view('admin.category.create');
+        return view('admin.category.create')->with('success','Category created successfully');
     }
     public function store(CategoryRequest $request){
         $validate=$request->validated();
@@ -22,7 +22,7 @@ class CategoryController extends Controller
             $validate['image']=$path;
         }
         Category::create($validate);
-        return view('admin.category.create');
+        return view('admin.category.create')->with('success','Category created successfully');
     }
 
 public function index(Request $request)
@@ -43,11 +43,11 @@ public function index(Request $request)
         ->orderByDesc('created_at')
         ->paginate(10);
 
-    return view('admin.category.index', compact('categories'));
+    return view('admin.category.index', compact('categories'))->with('success','Category created successfully');
 }
 public function edit( $id){
     $category=Category::find($id);
-    return view('admin.category.edit',compact('category'));
+    return view('admin.category.edit',compact('category'))->with('success','Category updated successfully');
 
 }
 

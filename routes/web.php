@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
@@ -8,8 +9,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\SuperAdmin\MaintenanceController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\UserController;
+use App\Livewire\Admin\Messages\Index;
+use App\Livewire\Admin\Messages\Show;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -104,5 +108,21 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
 //permission route
 route::resource('admin/permissions', PermissionController::class)->names('admin.permissions');
 route::post('admin/permissions/{role}', [PermissionController::class, 'assign'])->name('admin.permissions.assign');
+
+
+//super admin route
+Route::post('/maintenance/toggle', [
+    MaintenanceController::class,
+    'toggle',
+])->name('maintenance.toggle');
+
+
+Route::view('/contact', 'pages.contact')->name('contact');
+//admin message
+Route::view('/admin/messages', 'pages.messages.index')
+    ->name('admin.messages.index');
+
+Route::get('/admin/messages/{id}', [MessageController::class, 'show'])
+    ->name('admin.messages.show');
 
 require __DIR__.'/auth.php';

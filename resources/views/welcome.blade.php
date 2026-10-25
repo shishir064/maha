@@ -4,6 +4,9 @@
    {{-- Flash Sale / Offers --}}
     <x-home.offer-section />
 
+    {{-- Latest Products --}}
+    <x-home.latest-products />
+    
     {{-- Product Categories --}}
     <x-home.categories />
 
@@ -13,8 +16,6 @@
     {{-- Promotional Banner --}}
     <x-home.promo-banner />
 
-    {{-- Latest Products --}}
-    <x-home.latest-products />
 
     {{-- New Arrivals --}}
     <x-home.new-arrivals />

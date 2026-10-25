@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -31,6 +32,9 @@ public function store(ProductRequet $request)
     // Keep audience type IDs separate from product columns
     $typeIds = $validated['types_of_audiance'];
     unset($validated['types_of_audiance']);
+
+    // Generate slug from product name
+    $validated['slug'] = Str::slug($validated['name']);
 
     // Store the product image
     if ($request->hasFile('image')) {
@@ -63,6 +67,8 @@ public function update(ProductRequet $request, $id)
     $validated = $request->validated();
 
     $product = Product::findOrFail($id);
+
+    $validated['slug'] = Str::slug($validated['name']);
 
     // Handle image upload
     if ($request->hasFile('image')) {

@@ -25,15 +25,6 @@
         </a>
     </div>
 
-    {{-- Errors --}}
-    @if ($errors->any())
-        <div class="mb-5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
-            @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-            @endforeach
-        </div>
-    @endif
-
     {{-- Form --}}
     <form action="{{route('admin.category.store')}}"
           method="POST"

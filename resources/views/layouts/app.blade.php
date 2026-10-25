@@ -392,17 +392,22 @@
         </a>
 
         {{-- Messages --}}
-        <a href="{{ url('/admin/messages') }}"
-           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
-            <svg xmlns="http://www.w3.org/2000/svg"
-                 fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.8" stroke="currentColor"
-                 class="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M21.75 6.75v10.5A2.25 2.25 0 0 1 19.5 19.5h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15A2.25 2.25 0 0 0 2.25 6.75m19.5 0-9.75 6.75L2.25 6.75"/>
-            </svg>
-            Messages
-        </a>
+        <a href="{{ route('admin.messages.index') }}"
+   wire:navigate
+   class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+
+    <svg class="h-5 w-5 shrink-0"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.7"
+         viewBox="0 0 24 24">
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 5.25h16.5v13.5H3.75zM3.75 7.5l8.25 6 8.25-6" />
+    </svg>
+
+    <span>Messages</span>
+</a>
 
         {{-- Settings --}}
         <a href="{{ route('settings.index') }}"

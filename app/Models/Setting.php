@@ -18,5 +18,13 @@ class Setting extends Model
         'store_email',
         'store_phone',
         'store_address',
+        'maintenance_mode',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'maintenance_mode' => 'boolean',
+        ];
+    }
 }
