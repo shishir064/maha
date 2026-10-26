@@ -15,6 +15,7 @@ class CategoryController extends Controller
     }
     public function store(CategoryRequest $request){
         $validate=$request->validated();
+        $categories=Category::paginate(10);
         $path=null;
         if($request->hasFile('image')){
             $file=$request->file('image');
@@ -22,7 +23,8 @@ class CategoryController extends Controller
             $validate['image']=$path;
         }
         Category::create($validate);
-        return view('admin.category.create')->with('success','Category created successfully');
+
+        return redirect()->route('admin.category.index')->with('success','Category created successfully');
     }
 
 public function index(Request $request)

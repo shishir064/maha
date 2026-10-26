@@ -6,9 +6,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Mahasasto Shop' }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="icon" type="image/png" href="{{ asset('logo/logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    
 </head>
 
 <body class="bg-slate-100 text-slate-800 antialiased w-full ">
@@ -63,13 +65,111 @@
             <div class="ml-auto flex shrink-0 items-center gap-1 sm:gap-3">
 
                 <!-- Account -->
-                <a href="{{ Route::has('login') ? route('login') : '#' }}" aria-label="My account"
-                    class="rounded-full p-2 text-slate-700 hover:bg-slate-100 hover:text-sky-600">
-                    <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" class="h-6 w-6">
+             {{-- Profile / Login Dropdown --}}
+<div x-data="{ open: false }" class="relative">
+
+    @auth
+        {{-- Logged-in User --}}
+        <button
+            @click="open = !open"
+            @keydown.escape.window="open = false"
+            :aria-expanded="open"
+            class="flex items-center gap-2 rounded-xl p-1.5 transition hover:bg-slate-100"
+        >
+            {{-- First Letter Avatar --}}
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-lg font-bold text-white shadow-sm">
+                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+            </div>
+
+            <span class="hidden text-sm font-semibold text-slate-700 xl:block">
+                {{ Auth::user()->name }}
+            </span>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24"
+                stroke-width="1.8" stroke="currentColor"
+                class="hidden h-4 w-4 text-slate-500 transition sm:block"
+                :class="{ 'rotate-180': open }">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+            </svg>
+        </button>
+
+        {{-- User Dropdown --}}
+        <div
+            x-cloak
+            x-show="open"
+            @click.outside="open = false"
+            @keydown.escape.window="open = false"
+            x-transition.origin.top.right
+            class="absolute right-0 z-50 mt-3 w-60 overflow-hidden rounded-2xl border border-slate-200 bg-white py-2 shadow-xl"
+        >
+            {{-- User Information --}}
+            <div class="flex items-center gap-3 border-b border-slate-100 px-4 py-4">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-lg font-bold text-white">
+                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                </div>
+
+                <div class="min-w-0">
+                    <p class="truncate text-sm font-semibold text-slate-900">
+                        {{ Auth::user()->name }}
+                    </p>
+                    <p class="truncate text-xs text-slate-500">
+                        {{ Auth::user()->email }}
+                    </p>
+                </div>
+            </div>
+
+            {{-- My Profile --}}
+            <a href="{{ url('/profile') }}"
+                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.8" stroke="currentColor"
+                    class="h-5 w-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"/>
+                </svg>
+                My Profile
+            </a>
+
+            {{-- Logout --}}
+            <div class="mx-3 border-t border-slate-100"></div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit"
+                    class="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-red-600 transition hover:bg-red-50">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.8" stroke="currentColor"
+                        class="h-5 w-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 6.75a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.1a7.5 7.5 0 0 1 15 0A17.9 17.9 0 0 1 12 21.75c-2.7 0-5.25-.6-7.5-1.65Z" />
+                            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3"/>
                     </svg>
-                </a>
+                    Logout
+                </button>
+            </form>
+        </div>
+
+    @else
+        {{-- Guest User: Login Button --}}
+        <a href="{{ route('login') }}"
+            class="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24"
+                stroke-width="1.8" stroke="currentColor"
+                class="h-5 w-5 transition group-hover:translate-x-0.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3"/>
+            </svg>
+
+            <span>Login</span>
+        </a>
+    @endauth
+
+</div>
 
                 <!-- Wishlist -->
                 <a href="#wishlist" aria-label="Wishlist"
@@ -134,7 +234,7 @@
             <path stroke-linecap="round" stroke-linejoin="round"
                   d="m2.25 12 9.204-8.436a.75.75 0 0 1 1.092 0L21.75 12M4.5 9.938V19.5a.75.75 0 0 0 .75.75h4.5v-6h4.5v6h4.5a.75.75 0 0 0 .75-.75V9.938" />
         </svg>
-        <span>Home</span>
+        <span></span>
     </a>
 
     {{-- All Products --}}

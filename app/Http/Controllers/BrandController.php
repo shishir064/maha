@@ -22,7 +22,7 @@ class BrandController extends Controller
             $validate['image']=$path;
         }
         Brand::create($validate);
-        return view('admin.brand.create');
+        return redirect()->route('admin.brand.index')->with('success','Brand created successfully');
     }
 
     public function index(Request $request)

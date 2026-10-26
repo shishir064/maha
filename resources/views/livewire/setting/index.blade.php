@@ -218,7 +218,7 @@
             </p>
 
             <div class="flex flex-col-reverse gap-3 sm:flex-row">
-                <a href="{{ url('/super-admin/dashboard') }}"
+                <a href="{{ url('/dashboard') }}"
                    class="inline-flex items-center justify-center rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
                     Cancel
                 </a>

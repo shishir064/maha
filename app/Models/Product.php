@@ -33,4 +33,15 @@ class Product extends Model
     {
         return $this->belongsToMany(Types::class);
     }
+    public function getFinalPriceAttribute()
+{
+    return $this->discount
+        ? $this->price - ($this->price * $this->discount / 100)
+        : $this->price;
+}
+
+public function getInStockAttribute(): bool
+{
+    return $this->status && $this->stock > 0;
+}
 }
