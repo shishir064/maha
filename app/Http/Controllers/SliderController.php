@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
@@ -67,35 +68,49 @@ class SliderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SliderRequest $request, $id)
-    {
-        $slider = Slider::find($id);
-        $validated = $request->validated();
+ public function update(SliderRequest $request, $id)
+{
+    $slider = Slider::findOrFail($id);
 
-$path = null;
-if($request->hasFile('desktop_image')) {
-    $path = $request->file('desktop_image')->store(
-        'slider-images',
-        'public'
-    );
-    $validate['desktop_image']=$path;
-}
+    $validated = $request->validated();
 
-if($request->hasFile('mobile_image')) {
-    $path = $request->file('mobile_image')->store(
-        'slider-images',
-        'public'
-    );
-    $validate['mobile_image']=$path??$slider->mobile_image;
-}
+    // Update Desktop Image
+    if ($request->hasFile('desktop_image')) {
+        $path = $request->file('desktop_image')->store(
+            'sliders/desktop',
+            'public'
+        );
 
-        $slider->update($validated);
+        // Delete old image after storing the new one
+        if ($slider->desktop_image) {
+            Storage::disk('public')->delete($slider->desktop_image);
+        }
 
-        return redirect()
-            ->route('admin.sliders.index')
-            ->with('success', 'Slider updated successfully.');
+        $validated['desktop_image'] = $path;
     }
 
+    // Update Mobile Image
+    if ($request->hasFile('mobile_image')) {
+        $path = $request->file('mobile_image')->store(
+            'sliders/mobile',
+            'public'
+        );
+
+        // Delete old image after storing the new one
+        if ($slider->mobile_image) {
+            Storage::disk('public')->delete($slider->mobile_image);
+        }
+
+        $validated['mobile_image'] = $path;
+    }
+
+    // Update slider information
+    $slider->update($validated);
+
+    return redirect()
+        ->route('admin.sliders.index')
+        ->with('success', 'Slider updated successfully.');
+}
     /**
      * Remove the specified resource from storage.
      */

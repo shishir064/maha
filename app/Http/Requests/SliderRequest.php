@@ -30,13 +30,13 @@ class SliderRequest extends FormRequest
 
             'desktop_image' =>
      $this->isMethod('post')
-            ? 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
-            : 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            ? 'required|image|mimes:jpg,jpeg,png,webp'
+            : 'nullable|image|mimes:jpg,jpeg,png,webp',
 
 
             'mobile_image' => $this->isMethod('post')
-            ? 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
-            : 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            ? 'required|image|mimes:jpg,jpeg,png,webp'
+            : 'nullable|image|mimes:jpg,jpeg,png,webp',
 
 
             'start_at' => [
