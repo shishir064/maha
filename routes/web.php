@@ -28,6 +28,9 @@ Route::get('/dashboard', function () {
 //contact route
 Route::view('/contact', 'pages.contact')->name('contact');
 
+//About route
+Route::view('/about', 'pages.about')->name('about');
+
 //cart route
 Route::view('/cart', 'pages.cart')->name('cart');
 

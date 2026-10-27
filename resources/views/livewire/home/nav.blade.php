@@ -74,7 +74,8 @@
             </a>
 
             {{-- About Us --}}
-            <a href="#"
+            <a href="{{ route('about') }}"
+               wire:navigate
                class="shrink-0 py-3 transition-colors duration-200 hover:text-cyan-100">
                 About Us
             </a>
