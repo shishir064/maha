@@ -26,8 +26,8 @@ class AvertisementRequest extends FormRequest
         return [
             
      'image' => $this->isMethod('post')
-            ? 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
-            : 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            ? 'required|image|mimes:jpg,jpeg,png,webp'
+            : 'nullable|image|mimes:jpg,jpeg,png,webp',
 
 
             'link_type' => [
