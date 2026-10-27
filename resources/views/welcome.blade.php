@@ -1,12 +1,22 @@
 @extends('layouts.home')
 
 @section('content')
-   {{-- slider section --}}
-   <x-sliders />
-<x-categories />
+ 
+<x-sliders />
 <x-latestproducts />
+<x-topbanner />
+<x-categories />
+<x-bellow-top-banner />
+<x-allproducts />
+<x-middle-banner />
+<!-- here come an brands or category features section -->
+<x-bellow-middle-banner />
+<!-- here come an brands or category features section -->
+<x-bottom-banner />
 <x-brands />
 
+ 
+ 
 
 
 
