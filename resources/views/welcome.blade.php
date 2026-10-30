@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('content')
- 
+{{-- 
 <x-sliders />
 <x-latestproducts />
 <x-topbanner />
@@ -13,9 +13,9 @@
 <x-bellow-middle-banner />
 <!-- here come an brands or category features section -->
 <x-bottom-banner />
-<x-brands />
+<x-brands /> --}}
 
- 
+
  
 
 

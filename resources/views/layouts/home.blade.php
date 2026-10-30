@@ -133,6 +133,40 @@
                 My Profile
             </a>
 
+             <a href="#"
+                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
+              <svg xmlns="http://www.w3.org/2000/svg"
+    fill="none" viewBox="0 0 24 24"
+    stroke-width="1.8" stroke="currentColor"
+    class="h-5 w-5">
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M5.25 8.25h13.5l1.125 12H4.125l1.125-12Z" />
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 8.25V6a3 3 0 0 1 6 0v2.25" />
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 12.75h6" />
+</svg>
+my order
+            </a>
+
+@role('admin|super-admin')
+             <a href="{{ url('/dashboard') }}"
+                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
+           <svg xmlns="http://www.w3.org/2000/svg"
+    fill="none" viewBox="0 0 24 24"
+    stroke-width="1.8" stroke="currentColor"
+    class="h-5 w-5">
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="m3 10.5 9-7 9 7" />
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M5.25 9.75v10.5h13.5V9.75" />
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 20.25v-6h6v6" />
+</svg>
+                dashboard
+            </a>
+    @endrole
+
             {{-- Logout --}}
             <div class="mx-3 border-t border-slate-100"></div>
 

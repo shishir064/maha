@@ -2,7 +2,9 @@
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\BrandfeaturedController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryfeaturedController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -112,6 +114,15 @@ Route::prefix('super-admin')->name('super-admin.')->group(function () {
 route::resource('admin/permissions', PermissionController::class)->names('admin.permissions');
 route::post('admin/permissions/{role}', [PermissionController::class, 'assign'])->name('admin.permissions.assign');
 
+// brand featured section
+Route::get('/admin/brandfeatured/create',[BrandfeaturedController::class, 'create'])->name('admin.brandfeatured.create');
+Route::post('/admin/brandfeatured', [brandfeaturedController::class, 'store'])->name('admin.brandfeatured.store');
+Route::get('/admin/brandfeatured', [BrandfeaturedController::class, 'index'])->name('admin.brandfeatured.index');
+
+// category featured section
+Route::get('/admin/categoryfeatured/create',[CategoryfeaturedController::class, 'create'])->name('admin.categoryfeatured.create');
+Route::post('/admin/categoryfeatured', [CategoryfeaturedController::class, 'store'])->name('admin.categoryfeatured.store');
+Route::get('/admin/categoryfeatured', [CategoryfeaturedController::class, 'index'])->name('admin.categoryfeatured.index');
 
 //super admin route
 Route::post('/maintenance/toggle', [

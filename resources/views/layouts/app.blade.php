@@ -337,18 +337,102 @@
             Store Management
         </p>
 
-        {{-- Coupons --}}
-        <a href="{{ url('/admin/coupons') }}"
-           class="flex items-center gap-3 rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600">
+{{-- Featured Menu --}}
+<div x-data="{ open: {{ request()->routeIs('admin.brandfeatured.*', 'admin.categoryfeatured.*') ? 'true' : 'false' }} }">
+
+    {{-- Main Menu --}}
+    <button
+        type="button"
+        @click="open = !open"
+        class="flex w-full items-center justify-between rounded-xl px-4 py-3 text-slate-600 transition hover:bg-white hover:text-indigo-600"
+        :class="open ? 'bg-white text-indigo-600' : ''"
+    >
+
+        <span class="flex items-center gap-3">
+
+            {{-- Featured Icon --}}
             <svg xmlns="http://www.w3.org/2000/svg"
-                 fill="none" viewBox="0 0 24 24"
-                 stroke-width="1.8" stroke="currentColor"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke-width="1.8"
+                 stroke="currentColor"
                  class="h-5 w-5">
                 <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M9 7.5h6m-6 4h6m-6 4h3M5.25 3.75h13.5A2.25 2.25 0 0 1 21 6v12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18V6a2.25 2.25 0 0 1 2.25-2.25Z"/>
+                      d="M11.48 3.5a.75.75 0 0 1 1.04 0l2.1 2.14 2.98.44a.75.75 0 0 1 .42 1.28l-2.15 2.1.5 2.97a.75.75 0 0 1-1.09.79L12 11.82l-2.66 1.4a.75.75 0 0 1-1.09-.79l.5-2.97-2.15-2.1a.75.75 0 0 1 .42-1.28L10 5.64l1.48-2.14Z"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M5 14.5v4.25A2.25 2.25 0 0 0 7.25 21h9.5A2.25 2.25 0 0 0 19 18.75V14.5"/>
             </svg>
-            Coupons
+
+            <span class="font-medium">Featured</span>
+
+        </span>
+
+        {{-- Dropdown Arrow --}}
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke-width="2"
+             stroke="currentColor"
+             class="h-4 w-4 transition-transform duration-200"
+             :class="open ? 'rotate-180' : ''">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+        </svg>
+
+    </button>
+
+    {{-- Dropdown Items --}}
+    <div
+        x-cloak
+        x-show="open"
+        x-collapse
+        class="ml-5 mt-1 space-y-1 border-l-2 border-slate-200 pl-3"
+    >
+
+        {{-- Brand Featured --}}
+        <a href="{{ route('admin.brandfeatured.create') }}"
+           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600
+           {{ request()->routeIs('admin.brandfeatured.*') ? 'bg-indigo-50 font-semibold text-indigo-600' : '' }}">
+
+            {{-- Tag Icon --}}
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke-width="1.8"
+                 stroke="currentColor"
+                 class="h-5 w-5 shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7.5 3.75h5.69a2.25 2.25 0 0 1 1.59.66l5.31 5.31a2.25 2.25 0 0 1 0 3.18l-5.19 5.19a2.25 2.25 0 0 1-3.18 0l-7.47-7.47a2.25 2.25 0 0 1-.66-1.59V6A2.25 2.25 0 0 1 5.84 3.75H7.5Z"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M8.25 8.25h.008v.008H8.25V8.25Z"/>
+            </svg>
+
+            Brand Featured
         </a>
+
+        {{-- Category Featured --}}
+        <a href="{{ route('admin.categoryfeatured.create') }}"
+           class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600
+           {{ request()->routeIs('admin.categoryfeatured.*') ? 'bg-indigo-50 font-semibold text-indigo-600' : '' }}">
+
+            {{-- Category Grid Icon --}}
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke-width="1.8"
+                 stroke="currentColor"
+                 class="h-5 w-5 shrink-0">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3.75 3.75h6.5v6.5h-6.5v-6.5Zm10 0h6.5v6.5h-6.5v-6.5Zm-10 10h6.5v6.5h-6.5v-6.5Zm10 0h6.5v6.5h-6.5v-6.5Z"/>
+            </svg>
+
+            Category Featured
+        </a>
+
+    </div>
+
+</div>
+
 
         {{-- Banners --}}
         <a href="{{ route('admin.advertisement.index') }}"
@@ -564,6 +648,23 @@
                                       d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"/>
                             </svg>
                             My Profile
+                        </a>
+
+                        
+                        <a href="{{ url('/') }}"
+                           class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 hover:bg-slate-50">
+                           <svg xmlns="http://www.w3.org/2000/svg"
+    fill="none" viewBox="0 0 24 24"
+    stroke-width="1.8" stroke="currentColor"
+    class="h-5 w-5">
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="m3 10.5 9-7 9 7" />
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M5.25 9.75v10.5h13.5V9.75" />
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 20.25v-6h6v6" />
+</svg>
+                            home 
                         </a>
 
                         <div class="my-1 border-t border-slate-100"></div>

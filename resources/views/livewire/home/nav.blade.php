@@ -38,7 +38,7 @@
                 </button>
 
                 {{-- Categories Dropdown --}}
-                <div x-cloak
+              <div x-cloak
                      x-show="open"
                      x-transition
                      @click.outside="open = false"
@@ -55,8 +55,11 @@
                             <a href="{{ url('/categories/' . $category->slug) }}"
                                wire:navigate
                                wire:key="nav-category-{{ $category->id }}"
-                               class="block break-words px-4 py-2 text-sm font-medium transition hover:bg-cyan-50 hover:text-cyan-700">
-                                {{ $category->name }}
+                               class="flex items-center gap-3 break-words px-4 py-2 text-sm font-medium transition hover:bg-cyan-50 hover:text-cyan-700">
+                                <img src="{{ asset('storage/'.$category->image) }}"
+                     alt=""
+                     class="h-10 w-10 shrink-0 rounded-lg border border-slate-200 object-cover">
+                                <span class="min-w-0 flex-1">{{ $category->name }}</span>
                             </a>
                         @empty
                             <p class="px-4 py-3 text-sm text-slate-500">
@@ -66,7 +69,6 @@
                     </div>
                 </div>
             </div>
-
             {{-- All Products --}}
             <a href="#"
                class="shrink-0 py-3 transition-colors duration-200 hover:text-cyan-100">
@@ -116,15 +118,16 @@
                         <p class="text-[10px] font-bold uppercase tracking-wider text-cyan-700">
                             Shop by Brand
                         </p>
-                    </div>
-
-                    <div class="max-h-80 overflow-y-auto py-1">
+                    </div><div class="max-h-80 overflow-y-auto py-1">
                         @forelse ($brands as $brand)
                             <a href="{{ url('/brands/' . $brand->slug) }}"
                                wire:navigate
                                wire:key="nav-brand-{{ $brand->id }}"
-                               class="block break-words px-4 py-2 text-sm font-medium transition hover:bg-cyan-50 hover:text-cyan-700">
-                                {{ $brand->name }}
+                               class="flex items-center gap-3 break-words px-4 py-2 text-sm font-medium transition hover:bg-cyan-50 hover:text-cyan-700">
+                                <img src="{{ asset('storage/'.$brand->image) }}"
+                                     alt=""
+                                     class="h-10 w-10 shrink-0 rounded-lg border border-slate-200 object-cover">
+                                <span class="min-w-0 flex-1">{{ $brand->name }}</span>
                             </a>
                         @empty
                             <p class="px-4 py-3 text-sm text-slate-500">
