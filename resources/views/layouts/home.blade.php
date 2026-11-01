@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Mahasasto Shop' }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="icon" type="image/png" href="{{ asset('logo/logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -66,7 +65,7 @@
 
                 <!-- Account -->
              {{-- Profile / Login Dropdown --}}
-<div x-data="{ open: false }" class="relative">
+<div x-data="{ open: false }" class="relative hidden sm:block">
 
     @auth
         {{-- Logged-in User --}}
@@ -188,26 +187,27 @@ my order
 
     @else
         {{-- Guest User: Login Button --}}
-        <a href="{{ route('login') }}"
-            class="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        
+<a href="{{ route('login') }}"
+    class="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-teal-200 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
 
-            <svg xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 24 24"
-                stroke-width="1.8" stroke="currentColor"
-                class="h-5 w-5 transition group-hover:translate-x-0.5">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3"/>
-            </svg>
+    <svg xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 24 24"
+        stroke-width="1.8" stroke="currentColor"
+        class="h-5 w-5 transition group-hover:translate-x-0.5">
+        <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3"/>
+    </svg>
 
-            <span>Login</span>
-        </a>
+    <span>Login</span>
+</a>
     @endauth
 
 </div>
 
                 <!-- Wishlist -->
                 <a href="#wishlist" aria-label="Wishlist"
-                    class="relative rounded-full p-2 text-slate-700 hover:bg-slate-100 hover:text-red-500">
+                    class="relative hidden sm:inline-flex rounded-full p-2 text-slate-700 hover:bg-slate-100 hover:text-red-500">
                     <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" class="h-6 w-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 8.25c0 4.97-9 10.5-9 10.5S3 13.22 3 8.25a4.5 4.5 0 0 1 8.1-2.7L12 6.6l.9-1.05A4.5 4.5 0 0 1 21 8.25Z" />
@@ -218,15 +218,16 @@ my order
 
                 <!-- Cart -->
                 <a href="{{ route('cart') }}" wire:navigate aria-label="Shopping cart"
-                    class="relative rounded-full p-2 text-slate-700 hover:bg-slate-100 hover:text-sky-600">
+                    class="relative hidden sm:inline-flex rounded-full p-2 text-slate-700 hover:bg-slate-100 hover:text-sky-600">
                     {{-- Heroicons Shopping Cart --}}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                     <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
                     </svg>
 
 
-                    <span
-                        class="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-orange-500 px-1 text-[9px] font-bold text-white">0</span>
+                    <span class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold text-white">
+        <livewire:cart-count />
+    </span>
                 </a>
             </div>
         </div>

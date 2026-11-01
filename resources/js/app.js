@@ -41,9 +41,9 @@ function initializeSwipers() {
 
             breakpoints: {
                 480: { slidesPerView: 3, spaceBetween: 20 },
-                640: { slidesPerView: 4, spaceBetween: 24 },
-                1024: { slidesPerView: 5, spaceBetween: 28 },
-                1280: { slidesPerView: 6, spaceBetween: 30 },
+                640: { slidesPerView: 3, spaceBetween: 24 },
+                1024: { slidesPerView: 4, spaceBetween: 28 },
+                1280: { slidesPerView: 5, spaceBetween: 30 },
             },
         });
     });
