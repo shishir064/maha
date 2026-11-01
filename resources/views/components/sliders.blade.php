@@ -1,29 +1,45 @@
+
 {{-- Home Slider Section --}}
 <section
     x-data="{
         active: 0,
         total: {{ $sliders->count() }},
+        timer: null,
         init() {
             if (this.total > 1) {
-                setInterval(() => {
+                this.timer = setInterval(() => {
                     this.active = (this.active + 1) % this.total;
-                }, 5000);
+                }, 2000);
+            }
+        },
+        goTo(index) {
+            this.active = index;
+            if (this.timer) clearInterval(this.timer);
+            if (this.total > 1) {
+                this.timer = setInterval(() => {
+                    this.active = (this.active + 1) % this.total;
+                }, 2000);
             }
         }
     }"
-    class="relative w-full overflow-hidden bg-white">
+    class="relative w-full overflow-hidden bg-gray-100">
 
     {{-- Slides --}}
-    <div class="relative h-[150px] sm:h-[240px] lg:h-[400px]">
+    <div class="relative h-[150px] sm:h-[240px] md:h-[300px] lg:h-[380px] xl:h-[420px] w-full">
 
         @foreach($sliders as $index => $slider)
             <div
                 class="absolute inset-0 transition-opacity duration-700"
-                :class="active === {{ $index }} ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'">
+                :class="active === {{ $index }}
+                    ? 'opacity-100 z-10'
+                    : 'opacity-0 z-0 pointer-events-none'">
 
-                <a href="{{ $slider->button_link ?: '#' }}"
-                   @if($slider->button_link) target="_blank" @endif
-                   class="block h-full w-full">
+                <a
+                    href="{{ $slider->button_link ?: '#' }}"
+                    @if($slider->button_link)
+                        target="_blank" rel="noopener noreferrer"
+                    @endif
+                    class="block h-full w-full">
 
                     <picture class="block h-full w-full">
                         @if($slider->mobile_image)
@@ -35,7 +51,7 @@
                         <img
                             src="{{ asset('storage/' . $slider->desktop_image) }}"
                             alt="{{ $slider->title ?: 'Banner' }}"
-                            class="block h-full w-full object-cover object-center"
+                            class="block h-auto w-full object-contain object-center"
                             fetchpriority="{{ $loop->first ? 'high' : 'auto' }}"
                             loading="{{ $loop->first ? 'eager' : 'lazy' }}">
                     </picture>
@@ -46,16 +62,19 @@
 
     </div>
 
-    {{-- Dots (optional, delete this block if you don't want them) --}}
+    {{-- Navigation Dots --}}
     @if($sliders->count() > 1)
-        <div class="absolute bottom-2 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+        <div class="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-2">
             @foreach($sliders as $index => $slider)
                 <button
                     type="button"
-                    @click="active = {{ $index }}"
-                    :class="active === {{ $index }} ? 'bg-white' : 'bg-white/50'"
+                    @click="goTo({{ $index }})"
+                    :class="active === {{ $index }}
+                        ? 'bg-white scale-110'
+                        : 'bg-white/50 hover:bg-white/80'"
                     class="h-2.5 w-2.5 rounded-full shadow transition"
-                    aria-label="Go to slide {{ $index + 1 }}"></button>
+                    aria-label="Go to slide {{ $index + 1 }}">
+                </button>
             @endforeach
         </div>
     @endif

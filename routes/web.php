@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryfeaturedController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Shop\ProductController as ShopProductController; 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -37,7 +38,7 @@ Route::view('/about', 'pages.about')->name('about');
 Route::view('/cart', 'pages.cart')->name('cart');
 
 //product route
-Route::view('/products', 'pages.products')->name('products');
+Route::get('/products', [ShopProductController::class, 'index'])->name('products');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
