@@ -15,3 +15,49 @@
         transform: scaleX(0);
     }
 }
+
+/* Material Design Snackbar */
+.swal-snackbar {
+    background: #323232 !important;
+    color: #ffffff !important;
+    width: 360px !important;
+    min-height: 65px !important;
+    box-sizing: border-box !important;
+    border-radius: 3px !important;
+    padding: 12px 16px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+.swal-snackbar .swal2-title {
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    text-align: left !important;
+    flex: 1 1 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.swal-snackbar .swal2-actions {
+    flex: 0 0 auto !important;
+    margin: 0 0 0 15px !important;
+    padding: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
+.swal-snackbar-btn {
+    background: transparent !important;
+    color: #4caf50 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 8px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+}
