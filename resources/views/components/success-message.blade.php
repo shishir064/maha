@@ -1,15 +1,24 @@
-{{-- Normal Laravel session success message --}}
+{{-- Normal Laravel session success --}}
 @if(session('success'))
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
                 toast: true,
-                position: 'top-end',
-                icon: 'success',
+                position: 'bottom-end',
+                icon: false,
                 title: @json(session('success')),
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
+
+                showConfirmButton: true,
+                confirmButtonText: 'DISMISS',
+                buttonsStyling: false,
+
+                customClass: {
+                    popup: 'swal-snackbar',
+                    confirmButton: 'swal-snackbar-btn',
+                },
+
+                timer: 2000,
+                timerProgressBar: false,
             });
         });
     </script>
@@ -21,12 +30,21 @@
         Livewire.on('show-success', (event) => {
             Swal.fire({
                 toast: true,
-                position: 'top-end',
-                icon: 'success',
+                position: 'bottom-end',
+                icon: false,
                 title: event.message,
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
+
+                showConfirmButton: true,
+                confirmButtonText: 'DISMISS',
+                buttonsStyling: false,
+
+                customClass: {
+                    popup: 'swal-snackbar',
+                    confirmButton: 'swal-snackbar-btn',
+                },
+
+                timer: 2000,
+                timerProgressBar: false,
             });
         });
     });
