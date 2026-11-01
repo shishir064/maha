@@ -5,7 +5,7 @@
 
         @foreach($banners as $banner)
 
-            <a href="" class="block group">
+            <a href="{{ $banner->Url}}" class="block group">
 
                 <div class="relative overflow-hidden rounded shadow-lg">
 

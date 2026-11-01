@@ -37,6 +37,9 @@ Route::view('/about', 'pages.about')->name('about');
 //cart route
 Route::view('/cart', 'pages.cart')->name('cart');
 
+//products detail
+Route::get('/pages/products-details/{product:slug}', [ProductController::class, 'details'])->name('products.details');
+
 //product route
 Route::get('/products', [ShopProductController::class, 'index'])->name('products');
 

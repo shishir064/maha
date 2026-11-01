@@ -70,7 +70,7 @@
                 </div>
             </div>
             {{-- All Products --}}
-            <a href="#"
+            <a href="{{ route('products') }}"
                class="shrink-0 py-3 transition-colors duration-200 hover:text-cyan-100">
                 All Products
             </a>

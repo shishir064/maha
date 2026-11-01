@@ -104,4 +104,13 @@ public function delete($id){
     return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
 
 }
+
+public function details(Product $product)
+{
+    $product->load(['brand', 'category']);
+    $relatedproducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->get();
+
+    return view('pages.products-details', compact('product','relatedproducts'));
+}
+
 }
