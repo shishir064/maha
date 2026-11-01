@@ -118,12 +118,17 @@ route::post('admin/permissions/{role}', [PermissionController::class, 'assign'])
 Route::get('/admin/brandfeatured/create',[BrandfeaturedController::class, 'create'])->name('admin.brandfeatured.create');
 Route::post('/admin/brandfeatured', [brandfeaturedController::class, 'store'])->name('admin.brandfeatured.store');
 Route::get('/admin/brandfeatured', [BrandfeaturedController::class, 'index'])->name('admin.brandfeatured.index');
-
+Route::get('/admin/brandfeatured/{brandfeatured}/edit', [BrandfeaturedController::class, 'edit'])->name('admin.brandfeatured.edit');
+Route::put('/admin/brandfeatured/{brandfeatured}', [BrandfeaturedController::class, 'update'])->name('admin.brandfeatured.update');
+Route::delete('/admin/brandfeatured/{brandfeatured}', [BrandfeaturedController::class, 'delete'])->name('admin.brandfeatured.destroy');
 // category featured section
 Route::get('/admin/categoryfeatured/create',[CategoryfeaturedController::class, 'create'])->name('admin.categoryfeatured.create');
 Route::post('/admin/categoryfeatured', [CategoryfeaturedController::class, 'store'])->name('admin.categoryfeatured.store');
 Route::get('/admin/categoryfeatured', [CategoryfeaturedController::class, 'index'])->name('admin.categoryfeatured.index');
-
+Route::get('/admin/categoryfeatured/{categoryfeatured}/edit', [CategoryfeaturedController::class, 'edit'])->name('admin.categoryfeatured.edit');
+Route::put('/admin/categoryfeatured/{categoryfeatured}', [CategoryfeaturedController::class, 'update'])->name('admin.categoryfeatured.update');
+Route::delete('/admin/categoryfeatured/{categoryfeatured}', [CategoryfeaturedController::class, 'delete'])->name('admin.categoryfeatured.destroy');
+ 
 //super admin route
 Route::post('/maintenance/toggle', [
     MaintenanceController::class,

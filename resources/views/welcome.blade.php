@@ -1,8 +1,8 @@
 @extends('layouts.home')
 
 @section('content')
-{{-- 
-<x-sliders />
+
+{{-- <x-sliders />
 <x-latestproducts />
 <x-topbanner />
 <x-categories />

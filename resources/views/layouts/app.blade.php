@@ -390,7 +390,7 @@
     >
 
         {{-- Brand Featured --}}
-        <a href="{{ route('admin.brandfeatured.create') }}"
+        <a href="{{ route('admin.brandfeatured.index') }}"
            class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600
            {{ request()->routeIs('admin.brandfeatured.*') ? 'bg-indigo-50 font-semibold text-indigo-600' : '' }}">
 
@@ -411,7 +411,7 @@
         </a>
 
         {{-- Category Featured --}}
-        <a href="{{ route('admin.categoryfeatured.create') }}"
+        <a href="{{ route('admin.categoryfeatured.index') }}"
            class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-600 transition hover:bg-white hover:text-indigo-600
            {{ request()->routeIs('admin.categoryfeatured.*') ? 'bg-indigo-50 font-semibold text-indigo-600' : '' }}">
 
