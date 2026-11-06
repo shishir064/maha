@@ -9,11 +9,11 @@
     <link rel="icon" type="image/png" href="{{ asset('logo/logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    
+
 </head>
 
 <body class="bg-slate-100 text-slate-800 antialiased w-full ">
-    
+
     <x-home.top-bar />
 
 
@@ -64,151 +64,128 @@
             <div class="ml-auto flex shrink-0 items-center gap-1 sm:gap-3">
 
                 <!-- Account -->
-             {{-- Profile / Login Dropdown --}}
-<div x-data="{ open: false }" class="relative hidden sm:block">
+                {{-- Profile / Login Dropdown --}}
+                <div x-data="{ open: false }" class="relative hidden sm:block">
 
-    @auth
-        {{-- Logged-in User --}}
-        <button
-            @click="open = !open"
-            @keydown.escape.window="open = false"
-            :aria-expanded="open"
-            class="flex items-center gap-2 rounded-xl p-1.5 transition hover:bg-slate-100"
-        >
-            {{-- First Letter Avatar --}}
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-lg font-bold text-white shadow-sm">
-                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-            </div>
+                    @auth
+                        {{-- Logged-in User --}}
+                        <button @click="open = !open" @keydown.escape.window="open = false" :aria-expanded="open"
+                            class="flex items-center gap-2 rounded-xl p-1.5 transition hover:bg-slate-100">
+                            {{-- First Letter Avatar --}}
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-lg font-bold text-white shadow-sm">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                            </div>
 
-            <span class="hidden text-sm font-semibold text-slate-700 xl:block">
-                {{ Auth::user()->name }}
-            </span>
+                            <span class="hidden text-sm font-semibold text-slate-700 xl:block">
+                                {{ Auth::user()->name }}
+                            </span>
 
-            <svg xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 24 24"
-                stroke-width="1.8" stroke="currentColor"
-                class="hidden h-4 w-4 text-slate-500 transition sm:block"
-                :class="{ 'rotate-180': open }">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-            </svg>
-        </button>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+                                stroke="currentColor" class="hidden h-4 w-4 text-slate-500 transition sm:block"
+                                :class="{ 'rotate-180': open }">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </button>
 
-        {{-- User Dropdown --}}
-        <div
-            x-cloak
-            x-show="open"
-            @click.outside="open = false"
-            @keydown.escape.window="open = false"
-            x-transition.origin.top.right
-            class="absolute right-0 z-50 mt-3 w-60 overflow-hidden rounded-2xl border border-slate-200 bg-white py-2 shadow-xl"
-        >
-            {{-- User Information --}}
-            <div class="flex items-center gap-3 border-b border-slate-100 px-4 py-4">
-                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-lg font-bold text-white">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        {{-- User Dropdown --}}
+                        <div x-cloak x-show="open" @click.outside="open = false" @keydown.escape.window="open = false"
+                            x-transition.origin.top.right
+                            class="absolute right-0 z-50 mt-3 w-60 overflow-hidden rounded-2xl border border-slate-200 bg-white py-2 shadow-xl">
+                            {{-- User Information --}}
+                            <div class="flex items-center gap-3 border-b border-slate-100 px-4 py-4">
+                                <div
+                                    class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-lg font-bold text-white">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+
+                                <div class="min-w-0">
+                                    <p class="truncate text-sm font-semibold text-slate-900">
+                                        {{ Auth::user()->name }}
+                                    </p>
+                                    <p class="truncate text-xs text-slate-500">
+                                        {{ Auth::user()->email }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {{-- My Profile --}}
+                            <a href="{{ url('/profile') }}"
+                                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z" />
+                                </svg>
+                                My Profile
+                            </a>
+
+                            <a href="#"
+                                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M5.25 8.25h13.5l1.125 12H4.125l1.125-12Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 8.25V6a3 3 0 0 1 6 0v2.25" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75h6" />
+                                </svg>
+                                my order
+                            </a>
+
+                            @role('admin|super-admin')
+                                <a href="{{ url('/dashboard') }}"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m3 10.5 9-7 9 7" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 9.75v10.5h13.5V9.75" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 20.25v-6h6v6" />
+                                    </svg>
+                                    dashboard
+                                </a>
+                            @endrole
+
+                            {{-- Logout --}}
+                            <div class="mx-3 border-t border-slate-100"></div>
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-red-600 transition hover:bg-red-50">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3" />
+                                    </svg>
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        {{-- Guest User: Login Button --}}
+
+                        <a href="{{ route('login') }}"
+                            class="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-teal-200 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.8" stroke="currentColor"
+                                class="h-5 w-5 transition group-hover:translate-x-0.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3" />
+                            </svg>
+
+                            <span>Login</span>
+                        </a>
+                    @endauth
+
                 </div>
-
-                <div class="min-w-0">
-                    <p class="truncate text-sm font-semibold text-slate-900">
-                        {{ Auth::user()->name }}
-                    </p>
-                    <p class="truncate text-xs text-slate-500">
-                        {{ Auth::user()->email }}
-                    </p>
-                </div>
-            </div>
-
-            {{-- My Profile --}}
-            <a href="{{ url('/profile') }}"
-                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.8" stroke="currentColor"
-                    class="h-5 w-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"/>
-                </svg>
-                My Profile
-            </a>
-
-             <a href="#"
-                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
-              <svg xmlns="http://www.w3.org/2000/svg"
-    fill="none" viewBox="0 0 24 24"
-    stroke-width="1.8" stroke="currentColor"
-    class="h-5 w-5">
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="M5.25 8.25h13.5l1.125 12H4.125l1.125-12Z" />
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="M9 8.25V6a3 3 0 0 1 6 0v2.25" />
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="M9 12.75h6" />
-</svg>
-my order
-            </a>
-
-@role('admin|super-admin')
-             <a href="{{ url('/dashboard') }}"
-                class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 transition hover:bg-indigo-50 hover:text-indigo-700">
-           <svg xmlns="http://www.w3.org/2000/svg"
-    fill="none" viewBox="0 0 24 24"
-    stroke-width="1.8" stroke="currentColor"
-    class="h-5 w-5">
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="m3 10.5 9-7 9 7" />
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="M5.25 9.75v10.5h13.5V9.75" />
-    <path stroke-linecap="round" stroke-linejoin="round"
-        d="M9 20.25v-6h6v6" />
-</svg>
-                dashboard
-            </a>
-    @endrole
-
-            {{-- Logout --}}
-            <div class="mx-3 border-t border-slate-100"></div>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                    class="flex w-full items-center gap-3 px-4 py-3 text-left text-sm text-red-600 transition hover:bg-red-50">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.8" stroke="currentColor"
-                        class="h-5 w-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3"/>
-                    </svg>
-                    Logout
-                </button>
-            </form>
-        </div>
-
-    @else
-        {{-- Guest User: Login Button --}}
-        
-<a href="{{ route('login') }}"
-    class="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-teal-200 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
-
-    <svg xmlns="http://www.w3.org/2000/svg"
-        fill="none" viewBox="0 0 24 24"
-        stroke-width="1.8" stroke="currentColor"
-        class="h-5 w-5 transition group-hover:translate-x-0.5">
-        <path stroke-linecap="round" stroke-linejoin="round"
-            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3-3H9m0 0 3-3m-3 3 3 3"/>
-    </svg>
-
-    <span>Login</span>
-</a>
-    @endauth
-
-</div>
 
                 <!-- Wishlist -->
                 <a href="#wishlist" aria-label="Wishlist"
                     class="relative hidden sm:inline-flex rounded-full p-2 text-slate-700 hover:bg-slate-100 hover:text-red-500">
-                    <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" class="h-6 w-6">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"
+                        class="h-6 w-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 8.25c0 4.97-9 10.5-9 10.5S3 13.22 3 8.25a4.5 4.5 0 0 1 8.1-2.7L12 6.6l.9-1.05A4.5 4.5 0 0 1 21 8.25Z" />
                     </svg>
@@ -221,13 +198,15 @@ my order
                     class="relative hidden sm:inline-flex rounded-full p-2 text-slate-700 hover:bg-slate-100 hover:text-sky-600">
                     {{-- Heroicons Shopping Cart --}}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                    <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
+                        <path
+                            d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
                     </svg>
 
 
-                    <span class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold text-white">
-        <livewire:cart-count />
-    </span>
+                    <span
+                        class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold text-white">
+                        <livewire:cart-count />
+                    </span>
                 </a>
             </div>
         </div>
@@ -255,141 +234,121 @@ my order
             </form>
 
             <!-- Navigation Links -->
-            
-{{-- Mobile Navigation Links --}}
-<nav class="space-y-1">
 
-    {{-- Home --}}
-    <a href="/"
-       wire:navigate
-       @click="mobileMenuOpen = false"
-       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
-        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
-             stroke-width="1.7" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m2.25 12 9.204-8.436a.75.75 0 0 1 1.092 0L21.75 12M4.5 9.938V19.5a.75.75 0 0 0 .75.75h4.5v-6h4.5v6h4.5a.75.75 0 0 0 .75-.75V9.938" />
-        </svg>
-        <span></span>
-    </a>
+            {{-- Mobile Navigation Links --}}
+            <nav class="space-y-1">
 
-    {{-- All Products --}}
-    <a href="/products"
-       wire:navigate
-       @click="mobileMenuOpen = false"
-       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
-        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
-             stroke-width="1.7" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M3.75 6.75h16.5v12.5H3.75zM3.75 10.5h16.5M8 6.75v12.5" />
-        </svg>
-        <span>All Products</span>
-    </a>
+                {{-- Home --}}
+                <a href="/" wire:navigate @click="mobileMenuOpen = false"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m2.25 12 9.204-8.436a.75.75 0 0 1 1.092 0L21.75 12M4.5 9.938V19.5a.75.75 0 0 0 .75.75h4.5v-6h4.5v6h4.5a.75.75 0 0 0 .75-.75V9.938" />
+                    </svg>
+                    <span></span>
+                </a>
 
-    {{-- Categories Dropdown --}}
-    <div x-data="{ categoriesOpen: false }" class="rounded-lg">
+                {{-- All Products --}}
+                <a href="/products" wire:navigate @click="mobileMenuOpen = false"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 6.75h16.5v12.5H3.75zM3.75 10.5h16.5M8 6.75v12.5" />
+                    </svg>
+                    <span>All Products</span>
+                </a>
 
-        <button type="button"
-                @click="categoriesOpen = !categoriesOpen"
-                :aria-expanded="categoriesOpen"
-                class="flex w-full items-center justify-between rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                {{-- Categories Dropdown --}}
+                <div x-data="{ categoriesOpen: false }" class="rounded-lg">
 
-            <span class="flex items-center gap-3">
-                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
-                     stroke-width="1.7" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-                Categories
-            </span>
+                    <button type="button" @click="categoriesOpen = !categoriesOpen" :aria-expanded="categoriesOpen"
+                        class="flex w-full items-center justify-between rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
 
-            <svg class="h-4 w-4 shrink-0 transition-transform duration-200"
-                 :class="{ 'rotate-180': categoriesOpen }"
-                 fill="none" stroke="currentColor" stroke-width="1.8"
-                 viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
-        </button>
+                        <span class="flex items-center gap-3">
+                            <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            Categories
+                        </span>
 
-        {{-- Expandable Category List --}}
-        <div x-cloak
-             x-show="categoriesOpen"
-             x-transition
-             class="ml-5 mt-1 overflow-hidden rounded-lg border-l-2 border-sky-100 pl-3">
+                        <svg class="h-4 w-4 shrink-0 transition-transform duration-200"
+                            :class="{ 'rotate-180': categoriesOpen }" fill="none" stroke="currentColor"
+                            stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
 
-            <div class="max-h-56 space-y-1 overflow-y-auto py-1">
+                    {{-- Expandable Category List --}}
+                    <div x-cloak x-show="categoriesOpen" x-transition
+                        class="ml-5 mt-1 overflow-hidden rounded-lg border-l-2 border-sky-100 pl-3">
 
-                @forelse (\App\Models\Category::orderBy('name')->get() as $category)
-                    <a href="{{ url('/categories/' . $category->slug) }}"
-                       wire:navigate
-                       @click="mobileMenuOpen = false"
-                       class="block break-words rounded-md px-3 py-2.5 text-sm font-normal text-slate-600 transition hover:bg-sky-50 hover:text-sky-600">
-                        {{ $category->name }}
-                    </a>
-                @empty
-                    <p class="px-3 py-3 text-sm text-slate-500">
-                        No categories available.
-                    </p>
-                @endforelse
+                        <div class="max-h-56 space-y-1 overflow-y-auto py-1">
 
-            </div>
-        </div>
-    </div>
+                            @forelse (\App\Models\Category::orderBy('name')->get() as $category)
+                                <a href="{{ url('/categories/' . $category->slug) }}" wire:navigate
+                                    @click="mobileMenuOpen = false"
+                                    class="block break-words rounded-md px-3 py-2.5 text-sm font-normal text-slate-600 transition hover:bg-sky-50 hover:text-sky-600">
+                                    {{ $category->name }}
+                                </a>
+                            @empty
+                                <p class="px-3 py-3 text-sm text-slate-500">
+                                    No categories available.
+                                </p>
+                            @endforelse
 
-    {{-- Special Offers --}}
-    <a href="/offers"
-       wire:navigate
-       @click="mobileMenuOpen = false"
-       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
-        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
-             stroke-width="1.7" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="m12 3 2.5 5.5 6 .7-4.5 4.1 1.2 6-5.2-3-5.2 3 1.2-6-4.5-4.1 6-.7L12 3Z" />
-        </svg>
-        <span>Special Offers</span>
-    </a>
+                        </div>
+                    </div>
+                </div>
 
-    {{-- Our Brands --}}
-    <a href="/brands"
-       wire:navigate
-       @click="mobileMenuOpen = false"
-       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
-        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor"
-             stroke-width="1.7" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M12 3 3.75 7.5 12 12l8.25-4.5L12 3ZM3.75 12 12 16.5 20.25 12M3.75 16.5 12 21l8.25-4.5" />
-        </svg>
-        <span>Our Brands</span>
-    </a>
+                {{-- Special Offers --}}
+                <a href="/offers" wire:navigate @click="mobileMenuOpen = false"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m12 3 2.5 5.5 6 .7-4.5 4.1 1.2 6-5.2-3-5.2 3 1.2-6-4.5-4.1 6-.7L12 3Z" />
+                    </svg>
+                    <span>Special Offers</span>
+                </a>
 
-    {{-- Divider --}}
-    <div class="my-3 border-t border-slate-200"></div>
+                {{-- Our Brands --}}
+                <a href="/brands" wire:navigate @click="mobileMenuOpen = false"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.7"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 3 3.75 7.5 12 12l8.25-4.5L12 3ZM3.75 12 12 16.5 20.25 12M3.75 16.5 12 21l8.25-4.5" />
+                    </svg>
+                    <span>Our Brands</span>
+                </a>
 
-    {{-- Account --}}
-    <a href="{{ Route::has('login') ? route('login') : '#' }}"
-       @click="mobileMenuOpen = false"
-       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
-        <span>My Account / Login</span>
-    </a>
+                {{-- Divider --}}
+                <div class="my-3 border-t border-slate-200"></div>
 
-    {{-- Wishlist --}}
-    <a href="#wishlist"
-       @click="mobileMenuOpen = false"
-       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
-        <span>My Wishlist</span>
-        <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
-    </a>
+                {{-- Account --}}
+                <a href="{{ Route::has('login') ? route('login') : '#' }}" @click="mobileMenuOpen = false"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                    <span>My Account / Login</span>
+                </a>
 
-    {{-- Cart --}}
-    <a href="{{ route('cart') }}"
-       wire:navigate
-       @click="mobileMenuOpen = false"
-       class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
-        <span>My Cart</span>
-        <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
-    </a>
+                {{-- Wishlist --}}
+                <a href="#wishlist" @click="mobileMenuOpen = false"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                    <span>My Wishlist</span>
+                    <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
+                </a>
 
-</nav>
+                {{-- Cart --}}
+                <a href="{{ route('cart') }}" wire:navigate @click="mobileMenuOpen = false"
+                    class="flex items-center gap-3 rounded-lg px-3 py-3 font-medium text-slate-700 transition hover:bg-sky-50 hover:text-sky-600">
+                    <span>My Cart</span>
+                    <span class="ml-auto rounded-full bg-orange-100 px-2 py-0.5 text-xs text-orange-600">0</span>
+                </a>
+
+            </nav>
 
         </div>
 
@@ -407,7 +366,7 @@ my order
     </main>
     @include('components.home.footer')
 
-   <x-success-message />
+    <x-success-message />
     <x-error-message />
     @livewireScripts
 </body>
