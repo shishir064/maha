@@ -183,7 +183,7 @@
 
                 </div>
 
-                <a href="#"
+                <a href="{{ route('checkout') }}" wire:navigate
                    class="mt-6 flex w-full items-center justify-center rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700">
                     Proceed to Checkout
                 </a>

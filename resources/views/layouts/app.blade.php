@@ -132,23 +132,23 @@
 
             <div x-cloak x-show="open" x-transition
                  class="ml-7 mt-1 space-y-1 border-l border-slate-200 pl-4">
-                <a href="{{ url('/admin/orders') }}"
+                <a href="{{ route('admin.orders.create') }}"
                    class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
                     All Orders
                 </a>
-                <a href="{{ url('/admin/orders?status=pending') }}"
+                <a href=""
                    class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
                     Pending Orders
                 </a>
-                <a href="{{ url('/admin/orders?status=processing') }}"
+                <a href=""
                    class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
                     Processing
                 </a>
-                <a href="{{ url('/admin/orders?status=shipped') }}"
+                <a href=""
                    class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
                     Shipped
                 </a>
-                <a href="{{ url('/admin/orders?status=delivered') }}"
+                <a href=""
                    class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
                     Delivered
                 </a>

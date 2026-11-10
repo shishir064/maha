@@ -74,4 +74,43 @@ class CartService
         return (int) collect(session()->get('cart', []))
             ->sum('quantity');
     }
+
+    /**
+ * Get all cart items.
+ */
+public function getItems()
+{
+    if (Auth::check()) {
+        return Auth::user()
+            ->cart()
+            ->with('items.product')
+            ->first()
+            ?->items ?? collect();
+    }
+
+    $cart = session()->get('cart', []);
+
+    return collect($cart)->map(function ($item) {
+        return [
+            'product' => Product::find($item['product_id']),
+            'quantity' => $item['quantity'],
+        ];
+    })->filter(fn ($item) => $item['product'] !== null);
+}
+
+/**
+ * Clear the cart.
+ */
+public function clear(): void
+{
+    if (Auth::check()) {
+        $cart = Auth::user()->cart()->first();
+
+        $cart?->items()->delete();
+
+        return;
+    }
+
+    session()->forget('cart');
+}
 }

@@ -22,6 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'province',
+        'district',
+        'city',
+        'ward',
+        'address',
+        'landmark',
     ];
 
     /**
@@ -60,5 +67,11 @@ class User extends Authenticatable
 public function product()
 {
     return $this->belongsTo(\App\Models\Product::class);
+}
+
+public function orders()
+{
+    return $this->hasMany(\App\Models\Order::class);
+
 }
 }

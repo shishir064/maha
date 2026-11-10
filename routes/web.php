@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BrandfeaturedController;
@@ -7,10 +8,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryfeaturedController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Shop\ProductController as ShopProductController; 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\Shop\ProductController as ShopProductController; 
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SuperAdmin\MaintenanceController;
 use App\Http\Controllers\TypesController;
@@ -36,6 +37,7 @@ Route::view('/about', 'pages.about')->name('about');
 
 //cart route
 Route::view('/cart', 'pages.cart')->name('cart');
+Route::view('/checkout', 'pages.checkout')->name('checkout');
 
 //products detail
 Route::get('/pages/products-details/{product:slug}', [ProductController::class, 'details'])->name('products.details');
@@ -133,6 +135,22 @@ Route::get('/admin/categoryfeatured/{categoryfeatured}/edit', [CategoryfeaturedC
 Route::put('/admin/categoryfeatured/{categoryfeatured}', [CategoryfeaturedController::class, 'update'])->name('admin.categoryfeatured.update');
 Route::delete('/admin/categoryfeatured/{categoryfeatured}', [CategoryfeaturedController::class, 'delete'])->name('admin.categoryfeatured.destroy');
  
+
+Route::middleware(['auth', 'role:admin|super-admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        // Display order form
+        Route::get('/orders/create', [OrderController::class, 'create'])
+            ->name('orders.create');
+
+        // Save order
+        Route::post('/orders', [OrderController::class, 'store'])
+            ->name('orders.store');
+
+    });
+    
 //super admin route
 Route::post('/maintenance/toggle', [
     MaintenanceController::class,
