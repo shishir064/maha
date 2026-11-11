@@ -17,22 +17,6 @@
                         <h2 class="truncate text-xl font-bold text-slate-700">
                             {{ auth()->user()->name }}
                         </h2>
-
-                        @if(auth()->user()->hasVerifiedEmail())
-                            <p class="mt-1 flex items-center gap-2 text-sm text-green-600">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M12 3l8.25 3v5.25c0 4.5-3.75 7.5-8.25 9.75C7.5 18.75 3.75 15.75 3.75 11.25V6L12 3Z"/>
-                                </svg>
-                                Verified
-                            </p>
-                        @else
-                            <p class="mt-1 flex items-center gap-2 text-sm text-red-500">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3 20.25 6v5.25c0 4.5-3.75 7.5-8.25 9.75-4.5-2.25-8.25-5.25-8.25-9.75V6L12 3Z"/>
-                                </svg>
-                                Not verified
-                            </p>
-                        @endif
                     </div>
                 </div>
 
@@ -45,11 +29,11 @@
                         <svg class="h-6 w-6 shrink-0 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.118a7.5 7.5 0 0 1 15 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.5-1.632Z"/>
                         </svg>
-                        My profile
+                        My Profile
                     </a>
 
                     {{-- My Orders --}}
-                    <a href="{{ url('/orders') }}"
+                    <a href="{{ route('my-orders') }}"
                        class="flex items-center gap-4 rounded-lg px-4 py-4 text-base font-medium text-slate-700 transition hover:bg-white/70 hover:text-indigo-700">
                         <svg class="h-6 w-6 shrink-0 text-slate-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h13.5l1.125 12H4.125l1.125-12Z"/>

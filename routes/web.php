@@ -16,8 +16,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SuperAdmin\MaintenanceController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\UserController;
-use App\Livewire\Admin\Messages\Index;
-use App\Livewire\Admin\Messages\Show;
+use App\Livewire\MyOrders;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -150,6 +149,11 @@ Route::middleware(['auth', 'role:admin|super-admin'])
             ->name('orders.store');
 
     });
+
+    
+    Route::view('/my-orders', 'pages.myorders')
+        ->name('my-orders');
+
     
 //super admin route
 Route::post('/maintenance/toggle', [

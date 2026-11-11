@@ -8,7 +8,7 @@
                 {{-- Page Heading --}}
                 <div class="mb-6">
                     <h1 class="text-3xl font-semibold tracking-tight text-slate-800">
-                        my profile
+                        My Profile
                     </h1>
                 </div>
 
@@ -20,5 +20,4 @@
                 </div>
 
             </main>
-@include('profile.partials.profile-sidebar-footer')
 @endsection
