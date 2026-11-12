@@ -16,6 +16,7 @@ use App\Http\Controllers\SliderController;
 use App\Http\Controllers\SuperAdmin\MaintenanceController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\UserController;
+use App\Livewire\Admin\Orders\OrderDetails;
 use App\Livewire\MyOrders;
 use Illuminate\Support\Facades\Route;
 
@@ -141,8 +142,14 @@ Route::middleware(['auth', 'role:admin|super-admin'])
     ->group(function () {
 
         // Display order form
+        Route::get('orders', [OrderController::class, 'index'])
+            ->name('orders.index');
         Route::get('/orders/create', [OrderController::class, 'create'])
             ->name('orders.create');
+        Route::get('/orders/{order}', [OrderController::class, 'show'])
+            ->name('orders.show');
+            // Route::get('/orders/{order}', OrderDetails::class)
+            // ->name('orders.show');
 
         // Save order
         Route::post('/orders', [OrderController::class, 'store'])

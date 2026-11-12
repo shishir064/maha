@@ -13,6 +13,16 @@ use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
+
+    public function index()
+    {
+        return view('pages.orderlist');
+    }
+
+    public function show(Order $order)
+    {
+        return view('pages.order-detail', compact('order'));
+    }
     public function create()
     {
         $products = Product::where('status', true)
@@ -21,6 +31,8 @@ class OrderController extends Controller
 
         return view('admin.orders.create', compact('products'));
     }
+
+
 
     public function store(Request $request)
     {

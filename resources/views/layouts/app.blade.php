@@ -132,25 +132,15 @@
 
             <div x-cloak x-show="open" x-transition
                  class="ml-7 mt-1 space-y-1 border-l border-slate-200 pl-4">
-                <a href="{{ route('admin.orders.create') }}"
+                <a href="{{ route('admin.orders.index') }}"
+                    wire:navigate
                    class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
                     All Orders
                 </a>
-                <a href=""
+                <a href="{{ route('admin.orders.create') }}"
+                    wire:navigate
                    class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
-                    Pending Orders
-                </a>
-                <a href=""
-                   class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
-                    Processing
-                </a>
-                <a href=""
-                   class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
-                    Shipped
-                </a>
-                <a href=""
-                   class="block rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:bg-white hover:text-indigo-600">
-                    Delivered
+                    Create Order
                 </a>
             </div>
         </div>
