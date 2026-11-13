@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryfeaturedController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QrController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Shop\ProductController as ShopProductController; 
@@ -176,5 +177,8 @@ Route::view('/admin/messages', 'pages.messages.index')
 
 Route::get('/admin/messages/{id}', [MessageController::class, 'show'])
     ->name('admin.messages.show');
+
+Route::resource('admin/qr-codes', QrController::class)
+    ->names('admin.qr-codes');
 
 require __DIR__.'/auth.php';

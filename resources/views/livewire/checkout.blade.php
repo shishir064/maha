@@ -190,6 +190,7 @@
                         </div>
                     </div>
 
+
                     {{-- Payment Method --}}
                     <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
 
@@ -203,36 +204,100 @@
                             </p>
                         </div>
 
-                        <label
-                            class="flex cursor-pointer items-center gap-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/50 p-4">
+                        <div class="space-y-4">
 
-                            <input type="radio" wire:model="payment_method" value="cod"
-                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500">
+                            {{-- Cash on Delivery --}}
+                            <label
+                                class="flex cursor-pointer items-center gap-4 rounded-xl border p-4
+            {{ $payment_method === 'cod' ? 'border-indigo-500 bg-indigo-50/50' : 'border-gray-200' }}">
 
-                            <div
-                                class="flex h-11 w-11 items-center justify-center rounded-lg bg-white text-green-600 shadow-sm">
-                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 7h18v12H3zM3 11h18M7 15h3" />
-                                </svg>
-                            </div>
+                                <input type="radio" wire:model.live="payment_method" value="cod"
+                                    class="h-4 w-4 text-indigo-600">
 
-                            <div class="flex-1">
-                                <h3 class="text-sm font-semibold text-gray-900">
-                                    Cash on Delivery
+                                <div class="flex-1">
+                                    <h3 class="text-sm font-semibold text-gray-900">
+                                        Cash on Delivery
+                                    </h3>
+                                    <p class="mt-1 text-xs text-gray-500">
+                                        Pay when your order arrives.
+                                    </p>
+                                </div>
+
+                                <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                                    Available
+                                </span>
+
+                            </label>
+
+                            {{-- QR Payment --}}
+                            <label
+                                class="flex cursor-pointer items-center gap-4 rounded-xl border p-4
+            {{ $payment_method === 'qr' ? 'border-indigo-500 bg-indigo-50/50' : 'border-gray-200' }}">
+
+                                <input type="radio" wire:model.live="payment_method" value="qr"
+                                    class="h-4 w-4 text-indigo-600">
+
+                                <div class="flex-1">
+                                    <h3 class="text-sm font-semibold text-gray-900">
+                                        QR Code Payment
+                                    </h3>
+                                    <p class="mt-1 text-xs text-gray-500">
+                                        Scan QR code to pay online.
+                                    </p>
+                                </div>
+
+                                <span
+                                    class="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700">
+                                    Online
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                        {{-- Display QR Code --}}
+                        @if ($payment_method === 'qr')
+                            <div class="mt-5 rounded-xl border border-indigo-200 bg-indigo-50/40 p-5">
+
+                                <h3 class="text-center text-base font-bold text-gray-900">
+                                    Scan QR Code to Pay
                                 </h3>
-                                <p class="mt-1 text-xs text-gray-500">
-                                    Pay when your order arrives.
+
+                                <p class="mt-1 text-center text-sm text-gray-500">
+                                    Scan the QR code using your mobile banking or wallet app.
                                 </p>
+
+                                <div class="mt-5 flex justify-center">
+                                    <div class="rounded-xl border bg-white p-3 shadow-sm">
+
+                                        <img src="{{ asset('storage/' . $qrCode->image) }}" alt="Payment QR Code"
+                                            class="h-56 w-56 object-contain">
+
+                                    </div>
+                                </div>
+
+                                <p class="mt-4 text-center text-sm font-semibold text-gray-800">
+                                    {{ $qrCode->name }}
+                                </p>
+
+                                <div class="mt-4 rounded-lg bg-white p-3 text-center">
+                                    <p class="text-xs text-gray-500">
+                                        Amount to Pay
+                                    </p>
+                                    <p class="mt-1 text-xl font-bold text-indigo-600">
+                                        Rs. {{ number_format($grand_total, 2) }}
+                                    </p>
+                                </div>
+
+                                <p class="mt-4 text-center text-xs text-gray-500">
+                                    Please complete your payment and submit your order.
+                                </p>
+
                             </div>
-
-                            <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                                Available
-                            </span>
-
-                        </label>
+                        @endif
 
                     </div>
+
 
                     {{-- Order Notes --}}
                     <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -307,11 +372,11 @@
 
                             @forelse ($items as $item)
                                 <div wire:key="checkout-item-{{ $item['id'] }}" class="flex items-center gap-3">
-                                    
+
 
                                     {{-- Product Image --}}
                                     <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-100">
-                                        
+
 
                                         @if ($item['image'])
                                             <img src="{{ asset('storage/' . $item['image']) }}"

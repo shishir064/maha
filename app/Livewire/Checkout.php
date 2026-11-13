@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use App\Models\Qr;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -29,6 +30,8 @@ class Checkout extends Component
     public $subtotal = 0;
     public $shipping_fee = 0;
     public $grand_total = 0;
+    public $qrCode;
+    
 
     public function mount(CartService $cartService)
     {
@@ -36,6 +39,7 @@ class Checkout extends Component
 
         $this->customer_name = $user->name;
         $this->customer_email = $user->email;
+        $this->qrCode = Qr::latest()->first();
 
         $this->loadCart($cartService);
     }
