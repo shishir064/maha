@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ProductImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -39,6 +40,27 @@ class Product extends Model
         ? $this->price - ($this->price * $this->discount / 100)
         : $this->price;
 }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function primaryImage()
+{
+    return $this->hasOne(ProductImage::class)
+        ->where('is_primary', true);
+}
+
+    public function getFirstImageAttribute()
+    {
+        return $this->images()->first();
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->first_image ? asset('storage/' . $this->first_image->image) : null;
+    }
 
 public function getInStockAttribute(): bool
 {

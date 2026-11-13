@@ -257,29 +257,173 @@
             </div>
 
 
-            {{-- Product Image --}}
+
+
+            {{-- Product Images --}}
             <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                 <h2 class="mb-5 border-b border-slate-100 pb-3 text-lg font-semibold text-slate-800">
                     Product Media
                 </h2>
 
                 <div>
-                    <label for="image" class="mb-1.5 block text-sm font-medium text-slate-700">
-                        Product Image
+                    <label for="images" class="mb-1.5 block text-sm font-medium text-slate-700">
+                        Product Images <span class="text-red-500">*</span>
                     </label>
 
-                    <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png,.webp"
-                        class="block w-full rounded-lg border text-sm text-slate-600 file:mr-4 file:border-0 file:bg-teal-50 file:px-4 file:py-2.5 file:font-medium file:text-teal-700 hover:file:bg-teal-100 @error('image') border-red-500 @else border-slate-300 @enderror">
+                    <input type="file" name="images[]" id="images" accept=".jpg,.jpeg,.png,.webp" multiple
+                        onchange="previewImages(event)"
+                        class="block w-full rounded-lg border border-slate-300 text-sm text-slate-600 file:mr-4 file:border-0 file:bg-teal-50 file:px-4 file:py-2.5 file:font-medium file:text-teal-700 hover:file:bg-teal-100">
 
                     <p class="mt-1.5 text-xs text-slate-500">
-                        Allowed formats: JPG, JPEG, PNG, WEBP.
+                        You can select multiple images. Allowed formats: JPG, JPEG, PNG, WEBP.
                     </p>
 
-                    @error('image')
+                    @error('images')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
+
+                    @error('images.*')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+
+                    {{-- Image Preview --}}
+
+                    {{-- Image Preview --}}
+                    <div id="preview-container" class="mt-5 hidden">
+                        <h3 class="mb-3 text-sm font-semibold text-slate-700">
+                            Selected Images
+                        </h3>
+
+                        <div id="image-previews" class="flex flex-wrap gap-4"></div>
+
+                        <input type="hidden" name="primary_image_index" id="primary_image_index" value="0">
+
+                        <p class="mt-3 text-xs text-slate-500">
+                            Select which image should be displayed as the main product image.
+                        </p>
+                    </div>
+
                 </div>
             </div>
+
+            <script>
+                
+let selectedFiles = [];
+let primaryFile = null;
+
+function previewImages(event) {
+    const newFiles = Array.from(event.target.files);
+
+    newFiles.forEach(file => {
+        if (!file.type.startsWith('image/')) {
+            alert('Please select valid image files.');
+            return;
+        }
+
+        selectedFiles.push(file);
+    });
+
+    // First uploaded image becomes primary by default
+    if (!primaryFile && selectedFiles.length > 0) {
+        primaryFile = selectedFiles[0];
+    }
+
+    updateImagePreview();
+}
+
+function updateImagePreview() {
+    const container = document.getElementById('preview-container');
+    const previews = document.getElementById('image-previews');
+    const input = document.getElementById('images');
+    const primaryInput = document.getElementById('primary_image_index');
+
+    previews.innerHTML = '';
+
+    const dataTransfer = new DataTransfer();
+
+    selectedFiles.forEach((file, index) => {
+        dataTransfer.items.add(file);
+
+        const div = document.createElement('div');
+        div.className = 'relative rounded-xl border p-2 ' +
+            (file === primaryFile
+                ? 'border-teal-500 bg-teal-50'
+                : 'border-slate-200 bg-white');
+
+        const img = document.createElement('img');
+        img.className = 'h-32 w-32 rounded-lg object-contain bg-slate-50 p-1';
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            img.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+
+        // Primary badge
+        if (file === primaryFile) {
+            const badge = document.createElement('span');
+            badge.textContent = 'Primary';
+            badge.className =
+                'absolute left-3 top-3 rounded-md bg-teal-600 px-2 py-1 text-xs font-semibold text-white';
+
+            div.appendChild(badge);
+        }
+
+        // Set Primary button
+        const primaryButton = document.createElement('button');
+        primaryButton.type = 'button';
+        primaryButton.textContent =
+            file === primaryFile ? 'Primary Image' : 'Set as Primary';
+
+        primaryButton.className =
+            'mt-2 w-full rounded-lg px-2 py-2 text-xs font-semibold ' +
+            (file === primaryFile
+                ? 'bg-teal-600 text-white'
+                : 'bg-slate-100 text-slate-700 hover:bg-teal-100');
+
+        primaryButton.onclick = function() {
+            primaryFile = file;
+            updateImagePreview();
+        };
+
+        // Remove button
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.innerHTML = '&times;';
+        removeButton.className =
+            'absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-red-500 text-white shadow hover:bg-red-600';
+
+        removeButton.onclick = function() {
+            selectedFiles = selectedFiles.filter(f => f !== file);
+
+            if (primaryFile === file) {
+                primaryFile = selectedFiles[0] || null;
+            }
+
+            updateImagePreview();
+        };
+
+        div.appendChild(img);
+        div.appendChild(primaryButton);
+        div.appendChild(removeButton);
+
+        previews.appendChild(div);
+    });
+
+    // Update actual file input
+    input.files = dataTransfer.files;
+
+    // Send selected primary image index to Laravel
+    primaryInput.value = selectedFiles.indexOf(primaryFile);
+
+    container.classList.toggle('hidden', selectedFiles.length === 0);
+}
+
+            </script>
+
+
 
 
             {{-- Actions --}}

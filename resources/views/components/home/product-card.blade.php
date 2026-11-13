@@ -35,19 +35,18 @@
 
         {{-- Product Image --}}
         <div class="flex h-[190px] w-full shrink-0 items-center justify-center overflow-hidden">
-            @if($image)
-                <img
-                    src="{{ asset('storage/' . $image) }}"
-                    alt="{{ $product['name'] ?? 'Product image' }}"
-                    class="h-full w-full object-contain"
-                >
-            @else
-                <div class="flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-400">
-                    No image available
-                </div>
-            @endif
+    @if($product->primaryImage)
+        <img
+            src="{{ asset('storage/' . $product->primaryImage->image) }}"
+            alt="{{ $product->name }}"
+            class="h-full w-full object-contain"
+        >
+    @else
+        <div class="flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-400">
+            No image available
         </div>
-
+    @endif
+</div>
         {{-- Product Information --}}
         <div class="flex min-h-0 flex-1 flex-col">
 

@@ -25,33 +25,53 @@ class ProductController extends Controller
         return view('admin.products.create',compact('brands','categories','types'));
     }
 
+
+
 public function store(ProductRequet $request)
 {
     $validated = $request->validated();
 
-    // Keep audience type IDs separate from product columns
+    // Get audience type IDs
     $typeIds = $validated['types_of_audiance'];
     unset($validated['types_of_audiance']);
 
-    // Generate slug from product name
+    // Get uploaded images and primary image index
+    $images = $request->file('images');
+    $primaryIndex = (int) $validated['primary_image_index'];
+
+    // Remove fields that are not product table columns
+    unset(
+        $validated['images'],
+        $validated['primary_image_index']
+    );
+
+    // Generate slug
     $validated['slug'] = Str::slug($validated['name']);
 
-    // Store the product image
-    if ($request->hasFile('image')) {
-        $validated['image'] = $request->file('image')
-            ->store('product-image', 'public');
-    }
-
-    // Create the product
+    // Create product
     $product = Product::create($validated);
 
-    // Save audience types in the pivot table
+    // Save audience types
     $product->types()->sync($typeIds);
+
+    // Save product images
+    foreach ($images as $index => $image) {
+
+        $path = $image->store('product-image', 'public');
+
+        $product->images()->create([
+            'image' => $path,
+            'is_primary' => $index === $primaryIndex,
+            'sort_order' => $index,
+        ]);
+    }
 
     return redirect()
         ->route('admin.products.index')
         ->with('success', 'Product created successfully.');
 }
+
+
 public function edit($id){
     $product=Product::find($id);
     $brands = Brand::all();

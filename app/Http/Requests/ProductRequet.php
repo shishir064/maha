@@ -2,40 +2,39 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class ProductRequet extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-       
-               return [
+        return [
+
             // Basic Information
-            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'name' => [
+                'required',
+                'string',
+                'min:2',
+                'max:255',
+            ],
 
             'sku' => [
                 'nullable',
                 'string',
                 'max:100',
-            
             ],
 
-            'description' => ['required', 'string', 'max:5000'],
+            'description' => [
+                'required',
+                'string',
+                'max:5000',
+            ],
 
             'category_id' => [
                 'required',
@@ -48,13 +47,22 @@ class ProductRequet extends FormRequest
                 'integer',
                 'exists:brands,id',
             ],
-'types_of_audiance' => ['required', 'array', 'min:1'],
-'types_of_audiance.*' => [
-    'required',
-    'integer',
-    'distinct',
-    'exists:types,id',
-],
+
+            // Audience Types
+            'types_of_audiance' => [
+                'required',
+                'array',
+                'min:1',
+            ],
+
+            'types_of_audiance.*' => [
+                'required',
+                'integer',
+                'distinct',
+                'exists:types,id',
+            ],
+
+            // Product Status
             'status' => [
                 'required',
                 Rule::in(['0', '1']),
@@ -96,23 +104,38 @@ class ProductRequet extends FormRequest
                 'decimal:0,2',
             ],
 
-            // Product Image
-              'image' => $this->isMethod('post')
-            ? 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
-            : 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            
+            // Multiple Product Images
+            'images' => [
+                'required',
+                'array',
+                'min:1',
+                'max:10',
+            ],
+
+            'images.*' => [
+                'required',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
+            ],
+
+            // Primary Image Selection
+            'primary_image_index' => [
+                'required',
+                'integer',
+                'min:0',
+            ],
         ];
     }
 
     public function messages(): array
     {
         return [
+
+            // Basic Information
             'name.required' => 'Please enter the product name.',
             'name.min' => 'Product name must contain at least 2 characters.',
             'name.max' => 'Product name cannot exceed 255 characters.',
-
-            'sku.required' => 'Please enter the product SKU.',
-            'sku.unique' => 'This SKU already exists. Please use another SKU.',
 
             'category_id.required' => 'Please select a category.',
             'category_id.exists' => 'The selected category is invalid.',
@@ -120,12 +143,16 @@ class ProductRequet extends FormRequest
             'brand_id.required' => 'Please select a brand.',
             'brand_id.exists' => 'The selected brand is invalid.',
 
-            'type_id.required' => 'Please select a product type.',
-            'type_id.in' => 'Please select a valid product type.',
+            // Audience Types
+            'types_of_audiance.required' => 'Please select at least one audience type.',
+            'types_of_audiance.min' => 'Please select at least one audience type.',
+            'types_of_audiance.*.exists' => 'The selected audience type is invalid.',
 
+            // Status
             'status.required' => 'Please select the product status.',
             'status.in' => 'The selected product status is invalid.',
 
+            // Pricing
             'purchase_price.numeric' => 'Purchase price must be a valid number.',
             'purchase_price.min' => 'Purchase price cannot be negative.',
 
@@ -136,6 +163,7 @@ class ProductRequet extends FormRequest
             'discount.numeric' => 'Discount must be a valid number.',
             'discount.between' => 'Discount must be between 0 and 100.',
 
+            // Inventory
             'stock.required' => 'Please enter the stock quantity.',
             'stock.integer' => 'Stock quantity must be a whole number.',
             'stock.min' => 'Stock quantity cannot be negative.',
@@ -143,10 +171,45 @@ class ProductRequet extends FormRequest
             'weight.numeric' => 'Weight must be a valid number.',
             'weight.min' => 'Weight cannot be negative.',
 
-            'image.image' => 'The uploaded file must be an image.',
-            'image.mimes' => 'Image must be JPG, JPEG, PNG, or WEBP.',
-            'image.max' => 'Image size cannot exceed 2 MB.',
+            // Multiple Images
+            'images.required' => 'Please upload at least one product image.',
+            'images.array' => 'Invalid image upload.',
+            'images.min' => 'Please upload at least one product image.',
+            'images.max' => 'You can upload a maximum of 10 images.',
+
+            'images.*.required' => 'Please select a product image.',
+            'images.*.image' => 'Every uploaded file must be an image.',
+            'images.*.mimes' => 'Images must be JPG, JPEG, PNG, or WEBP.',
+            'images.*.max' => 'Each image must not exceed 2 MB.',
+
+            // Primary Image
+            'primary_image_index.required' => 'Please select a primary product image.',
+            'primary_image_index.integer' => 'Invalid primary image selection.',
+            'primary_image_index.min' => 'Invalid primary image selection.',
         ];
-    
+    }
+
+    /**
+     * Validate that the selected primary image index exists.
+     */
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+
+            $images = $this->file('images', []);
+            $primaryIndex = $this->input('primary_image_index');
+
+            if (
+                is_array($images) &&
+                is_numeric($primaryIndex) &&
+                (int) $primaryIndex >= 0 &&
+                (int) $primaryIndex >= count($images)
+            ) {
+                $validator->errors()->add(
+                    'primary_image_index',
+                    'The selected primary image is invalid.'
+                );
+            }
+        });
     }
 }
