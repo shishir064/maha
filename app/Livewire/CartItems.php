@@ -109,7 +109,7 @@ class CartItems extends Component
                         return [
                             'id' => $item->product->id,
                             'name' => $item->product->name,
-                            'image' => $item->product->image,
+                            'image' => $item->product->primaryImage?->image,
                             'price' => (float) $item->unit_price,
                             'quantity' => (int) $item->quantity,
                             'subtotal' => (float) $item->unit_price * $item->quantity,

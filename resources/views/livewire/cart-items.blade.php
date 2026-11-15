@@ -42,6 +42,11 @@
             {{-- Cart Products --}}
             <div class="space-y-4 lg:col-span-2">
 
+                @php
+                $image = $product['image'] ?? null;
+                @endphp
+
+                {{-- Cart Items --}}
                 @foreach ($items as $item)
 
                     <div wire:key="cart-item-{{ $item['id'] }}"
@@ -62,6 +67,7 @@
                                         No Image
                                     </span>
                                 @endif
+                                
                             </div>
 
                             {{-- Product Information --}}

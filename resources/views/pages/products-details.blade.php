@@ -38,51 +38,46 @@
             }" class="flex flex-col gap-4">
 
                 {{-- Main Image --}}
-                
-{{-- Main Image with Amazon-style Zoom --}}
-<div
-    class="group relative flex min-h-[350px] items-center justify-center overflow-hidden bg-slate-50 p-6 sm:min-h-[500px] lg:min-h-[550px]"
-    @mousemove="
+
+                {{-- Main Image with Amazon-style Zoom --}}
+                <div class="group relative flex min-h-[350px] items-center justify-center overflow-hidden bg-slate-50 p-6 sm:min-h-[500px] lg:min-h-[550px]"
+                    @mousemove="
         const rect = $el.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width) * 100;
         const y = ((event.clientY - rect.top) / rect.height) * 100;
 
         $refs.zoomImage.style.transformOrigin = `${x}% ${y}%`;
     "
-    @mouseenter="$refs.zoomImage.style.transform = 'scale(2)'"
-    @mouseleave="
+                    @mouseenter="$refs.zoomImage.style.transform = 'scale(2)'"
+                    @mouseleave="
         $refs.zoomImage.style.transform = 'scale(1)';
         $refs.zoomImage.style.transformOrigin = 'center center';
-    "
->
+    ">
 
-    {{-- Discount Badge --}}
-    @if($discount > 0)
-        <span class="absolute left-5 top-5 z-20 rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white">
-            -{{ rtrim(rtrim(number_format($discount, 2), '0'), '.') }}% OFF
-        </span>
-    @endif
+                    {{-- Discount Badge --}}
+                    @if ($discount > 0)
+                        <span
+                            class="absolute left-5 top-5 z-20 rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white">
+                            -{{ rtrim(rtrim(number_format($discount, 2), '0'), '.') }}% OFF
+                        </span>
+                    @endif
 
-    {{-- Main Image --}}
-    <template x-if="activeImage">
-        <img
-            x-ref="zoomImage"
-            :src="activeImage"
-            alt="{{ $product->name }}"
-            class="max-h-[480px] w-full cursor-zoom-in object-contain transition-transform duration-200 ease-out"
-            style="transform: scale(1); transform-origin: center center;"
-        >
-    </template>
+                    {{-- Main Image --}}
+                    <template x-if="activeImage">
+                        <img x-ref="zoomImage" :src="activeImage" alt="{{ $product->name }}"
+                            class="max-h-[480px] w-full cursor-zoom-in object-contain transition-transform duration-200 ease-out"
+                            style="transform: scale(1); transform-origin: center center;">
+                    </template>
 
-    {{-- No Image --}}
-    <template x-if="!activeImage">
-        <div class="flex h-80 w-full items-center justify-center text-gray-400">
-            <i class="fas fa-image mr-2 text-3xl"></i>
-            No image available
-        </div>
-    </template>
+                    {{-- No Image --}}
+                    <template x-if="!activeImage">
+                        <div class="flex h-80 w-full items-center justify-center text-gray-400">
+                            <i class="fas fa-image mr-2 text-3xl"></i>
+                            No image available
+                        </div>
+                    </template>
 
-</div>
+                </div>
 
 
                 {{-- Image Thumbnails --}}
